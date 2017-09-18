@@ -70,8 +70,8 @@ class Crud extends CI_Controller {
 
 		if($this->form_validation->run()==TRUE):
             $dados = elements(array('nome','senha'), $this->input->post());
-        	$dados['senha']=md5($dados['senha']);
-        	//$this->crud_model->to_update($dados);
+        	//$dados['senha']=md5($dados['senha']);
+        	$this->crud_model->do_update($dados, array('id'=>$this->input->post('idusuario')));
         endif;
 
 		$dados = array(
@@ -83,11 +83,14 @@ class Crud extends CI_Controller {
 
 	public function delete()
 	{
+		if ($this->input->post('idusuario') > 0):
+			$this->crud_model->do_delete(array('id' => $this->input->post('idusuario')));
+		endif;
+		
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Delete',
 			'tela' => 'delete',
 		);
 		$this->load->view('crud',$dados);
-	}
-		
+	}		
 }

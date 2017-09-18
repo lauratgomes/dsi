@@ -28,4 +28,21 @@ class Crud_model extends CI_Model{
 		endif;
 	}
 
+	// UPDATE
+	public function do_update($dados=NULL, $condicao=NULL) {
+		if ($dados!=NULL && $condicao!=NULL):
+			$this->db->update('pessoa', $dados, $condicao);
+			$this->session->set_flashdata('edicaook, Cadastro realizado com sucesso!');
+			redirect(current_url());
+		endif;
+	}
+
+	// DELETE
+	public function do_delete($condicao = NULL) {
+		if ($condicao != NULL):
+			$this->db->delete('pessoa', $condicao);
+			$this->session->set_flashdata('exclusaook', 'Registro excluído com sucesso!');
+			redirect('crud/retrieve');
+		endif;
+	}
 }
