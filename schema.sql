@@ -5,3 +5,5 @@
 	login VARCHAR(25),
 	senha VARCHAR(50)
 );
+
+Pra colocar css, criar uma pasta "CSS" em "Aplication" e põe os arquivos lá. O link nas páginas continua normal.
