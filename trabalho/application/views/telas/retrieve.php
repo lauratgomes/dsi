@@ -1,4 +1,6 @@
 <?php 
+	$this->load->view('includes/header');
+
 echo '<h2> Lista de Notícias</h2>';
 
 if ($this->session->flashdata('exclusaook')):

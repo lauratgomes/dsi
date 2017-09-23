@@ -1,4 +1,6 @@
 <?php 
+$this->load->view('includes/header');
+
 echo form_open('crud/create');
 echo validation_errors('<p>','</p>');
 

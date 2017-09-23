@@ -1,4 +1,5 @@
 <?php
+	$this->load->view('includes/header');
 
 $id_not = $this->uri->segment(3);
 if ($id_not == NULL) redirect('crud/retrieve');

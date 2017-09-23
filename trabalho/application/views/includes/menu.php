@@ -7,4 +7,5 @@
     <li> <?php echo anchor('crud/retrieve_usuarios','Retrieve Usuários') ?> </li>
     <li> <?php echo anchor('crud/update_usuarios','Update Usuários') ?> </li>
     <li> <?php echo anchor('crud/delete_usuarios','Delete Usuários') ?> </li>
+    <li> <?php echo anchor('crud/logout', 'Logout') ?> </li>
 </ul>

@@ -3,7 +3,6 @@
 class Crud_model extends CI_Model{
 
 	// CRUD NOTICIAS
-
 	// INSERT
 	public function insert_noticias($dados = NULL){
 		if ($dados != NULL):
@@ -95,13 +94,27 @@ class Crud_model extends CI_Model{
 		endif;
 	}
 
+	public function session_login($dados = NULL) {	
+		if ($dados != NULL) {
+			if ($dados['login'] == 'admin') {
+				$where = "login = 'admin' AND senha = '" . $dados['senha'] . "'";
+			} else {
+				$where = "login = '" . $dados['login'] . "' AND senha = '" . $dados['senha'] . "'";
+			}
 
-	public function session_login($dados = NULL) {
-		if ($dados != NULL):
-			if (($this->db->where('nome', 'admin')) && ($this->db->where('senha', $dados->senha))):
-				$admin = array('nome'=>$dados->nome, 'senha'=>$dados->senha, 'logged_in'=>TRUE);
-				$this->session->set_userdata($admin);
-			endif;
-		endif;
+			$query = $this->db->query("SELECT * FROM usuario WHERE " . $where . " LIMIT 1");
+
+			if ($query->row()) {
+				$vet = [];
+				foreach ($query->result() as $row) {
+			    	$vet[] = $row->login;
+			    	$vet[] = $row->permissao;
+				}
+
+				return $vet;
+			} else {
+				return;
+			}
+		}
 	}
 }

@@ -1,4 +1,5 @@
 <?php
+	$this->load->view('includes/header');
 
 $id_user = $this->uri->segment(3);
 if ($id_user == NULL) redirect('crud/retrieve_usuarios');

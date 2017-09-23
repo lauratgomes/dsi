@@ -5,16 +5,23 @@ ser desenvolvida utilizando-se o framework CodeIgniter.
 
 O sistema deverá apresentar:
 
-- uma área de login para os administradores
+- uma área de login para os administradores - OK
 - um CRUD para o registro de usuários - OK
-- um sistema de permissões
+- um sistema de permissões - OK
 - um CRUD para o cadastro de notícias - OK
 
 
 Considerações:
-- Por enquanto todos os usuários fazem isso
+- As notícias deverão conter um id, data, autor, título, texto e imagem e os usuários
+deverão conter id, user, password, nome, permissões.
+
+- Deverá existir um usuário admin cadastrado no sistema, o qual poderá fazer o
+gerenciamento dos demais usuários.
+
 - Os usuários poderão cadastrar notícias, editar e excluir notícias, conforme suas
 permissões atribuídas.
+
+- As notícias deverão ser mostradas de forma que as mais recentes tenha mais destaque.
 
 
 
@@ -23,15 +30,3 @@ Observação:
 
 O trabalho deverá ser desenvolvido nas aulas dos dias 22/09 e 29/10, sendo apresentado
 neste último dia (29). Deverá ser enviado através do Moodle e valerá 5 pontos no bimestre.
-
-
------------------- OK ------------------
-- As notícias deverão conter um id, data, autor, título, texto e imagem e os usuários
-deverão conter id, user, password, nome, permissões.
-
-- Deverá existir um usuário admin cadastrado no sistema, o qual poderá fazer o
-gerenciamento dos demais usuários.
-
-- 
-
-- As notícias deverão ser mostradas de forma que as mais recentes tenha mais destaque.

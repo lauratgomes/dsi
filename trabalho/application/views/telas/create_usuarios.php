@@ -1,4 +1,6 @@
-<?php 
+<?php
+$this->load->view('includes/header');
+
 echo form_open('crud/create_usuarios');
 echo validation_errors('<p>','</p>');
 
@@ -17,7 +19,7 @@ echo form_label('Senha: ');
 echo form_password(array('name'=>'senha'),set_value('senha'));
 echo "<br />";
 echo form_label('Permissão: ');
-echo "<input type='number' name='permissao'>";
+echo "<input type='number' max='3' name='permissao'>";
 echo "<br />";
 echo form_submit(array('name'=>'cadastrar'), 'Cadastrar');
 echo form_close();
