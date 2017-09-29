@@ -36,46 +36,31 @@ class Crud extends CI_Controller {
 		$this->form_validation->set_rules('imagem', 'IMAGEM', 'trim');
 
 		if ($this->form_validation->run() == TRUE):
-			$dados = elements(array('titulo', 'descricao', 'autor', 'data', 'imagem'),
-			$this->input->post());
+			$dados = elements(array('titulo', 'descricao', 'autor', 'data', 'imagem'), $this->input->post());
 			$this->load->model('crud_model');
-			$this->crud_model->insert_noticias($dados);
-			//$this->upload->do_upload();
+
+			$id_noticia = $this->crud_model->insert_noticias($dados);
+			$this->upload->do_upload($id_noticia);
 		endif;
 
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Create',
 			'tela' => 'create',
-		);
+			);
 		$this->load->view('crud',$dados);
 	}
 
 
+	public function do_upload($id = NULL) {
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'jpg|png';
+        $config['file_name'] = $id;
 
+        $this->load->library('upload', $config);
 
-
-
-
-	public function do_upload($imagem = NULL) {
-		$config['upload_path'] = 'uploads/';
-		$config['allowed_types'] = 'jpeg|jpg|png';
-		$config['max_size'] = 100;
-		$config['max_width'] = 1024;
-		$config['max_height'] = 768;
-
-		$this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload($imagem)) {
-			$error = array('error' => $this->upload->display_errors());
-			$this->load->view('upload_form', $error);
-		} else {
-			//$this->upload->data('full path'); 
-			$data = array('upload_data' => $this->upload->data('full path'));
-			echo $data;
-			//$this->load->view('crud/retrieve', $data);
-		}
-	}
-
+        $this->upload->do_upload('imagem');
+      
+    }
 
 
 
@@ -221,7 +206,7 @@ class Crud extends CI_Controller {
 					);
 				
 				//session_start();
-				$this->session->set_userdata('logged_in', $session_data);
+				$this->session->set_userdata('usuario', $session_data);
 				
 				$dados2 = array(
 					'titulo' => 'teste',
@@ -241,7 +226,7 @@ class Crud extends CI_Controller {
 			'login' => '',
 			'permissao' => '',
 			);
-		$this->session->unset_userdata('logged_in', $dados);
+		$this->session->unset_userdata('usuario', $dados);
 		$msg['message_display'] = 'Successfully Logout';
 		$this->load->view('login_form', $msg);
 	}

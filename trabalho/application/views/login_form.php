@@ -1,28 +1,10 @@
-<html>
 <?php
-	if (isset($this->session->userdata['logged_in'])) {
+	if (isset($this->session->userdata['usuario'])) {
 		
 	} else {
 		//$msg = "Você deve estar logado!";
 	}
-?>
-<head>
-	<title>Login Form</title>
-</head>
-<body>
-	<?php
-		if (isset($msg)) {
-			echo $msg;
-		}
-	?>
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
 
-	<?php 
 			$this->load->view('includes/header');
 
 		echo form_open('crud/user_login_process'); 

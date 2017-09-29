@@ -8,6 +8,7 @@ if ($id_not == NULL) redirect('crud/retrieve');
 $query = $this->crud_model->select_noticias($id_not)->row();
 
 echo form_open("crud/update/$id_not");
+
 echo validation_errors('<p>','</p>');
 if ($this->session->flashdata('edicaook')):
 	echo '<p>' . $this->session->flashdata('edicaook') . '</p>';
@@ -33,3 +34,6 @@ echo "<br />";
 echo form_submit(array('name'=>'cadastrar'), 'Alterar Dados');
 echo form_hidden('id_noticia', $query->id);
 echo form_close();
+
+
+	$this->load->view('includes/footer');

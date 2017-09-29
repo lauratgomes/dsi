@@ -6,9 +6,8 @@ class Crud_model extends CI_Model{
 	// INSERT
 	public function insert_noticias($dados = NULL){
 		if ($dados != NULL):
-			$this->db->insert('noticia',$dados);
-			$this->session->set_flashdata('cadastrook', 'Cadastro realizado com sucesso!');
-			redirect('crud/retrieve');
+				echo $this->db->insert('noticia', _id())) {
+			}
 		endif;
 	}
 
@@ -30,18 +29,18 @@ class Crud_model extends CI_Model{
 	}
 
 	// UPDATE
-	public function update_noticias($dados = NULL, $condicao = NULL) {
-		if ($dados != NULL && $condicao != NULL):
-			$this->db->update('noticia', $dados, $condicao);
+	public function update_noticias($dados = NULL, $id = NULL) {
+		if ($dados != NULL && $id != NULL):
+			$this->db->update('noticia', $dados, $id);
 			$this->session->set_flashdata('edicaook, Cadastro realizado com sucesso!');
 			redirect('crud/retrieve');
 		endif;
 	}
 
 	// DELETE
-	public function delete_noticias($condicao = NULL) {
-		if ($condicao != NULL):
-			$this->db->delete('noticia', $condicao);
+	public function delete_noticias($id = NULL) {
+		if ($id != NULL):
+			$this->db->delete('noticia', $id);
 			$this->session->set_flashdata('exclusaook', 'Registro excluído com sucesso!');
 			redirect('crud/retrieve');
 		endif;
@@ -77,22 +76,24 @@ class Crud_model extends CI_Model{
 	}
 
 	// UPDATE
-	public function update_usuarios($dados = NULL, $condicao = NULL) {
-		if ($dados != NULL && $condicao != NULL):
-			$this->db->update('usuario', $dados, $condicao);
+	public function update_usuarios($dados = NULL, $id = NULL) {
+		if ($dados != NULL && $id != NULL):
+			$this->db->update('usuario', $dados, $id);
 			$this->session->set_flashdata('edicaook, Cadastro realizado com sucesso!');
 			redirect('crud/retrieve_usuarios');
 		endif;
 	}
 
 	// DELETE
-	public function delete_usuarios($condicao = NULL) {
-		if ($condicao != NULL):
-			$this->db->delete('usuario', $condicao);
+	public function delete_usuarios($id = NULL) {
+		if ($id != NULL):
+			$this->db->delete('usuario', $id);
 			$this->session->set_flashdata('exclusaook', 'Registro excluído com sucesso!');
 			redirect('crud/retrieve_usuarios');
 		endif;
 	}
+
+
 
 	public function session_login($dados = NULL) {	
 		if ($dados != NULL) {
