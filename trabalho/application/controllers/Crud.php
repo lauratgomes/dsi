@@ -1,6 +1,4 @@
 <?php
-
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Crud extends CI_Controller {
@@ -10,6 +8,7 @@ class Crud extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->helper('array');
+		$this->load->helper('file');
 		$this->load->library('form_validation');
 		$this->load->library('session');
 		$this->load->library('table');
@@ -27,6 +26,8 @@ class Crud extends CI_Controller {
 
 
 
+
+
 	// CRUD NOTICIAS (C - OK; R - OK; U - ; D - OK;)
 	public function create() {
 		$this->form_validation->set_rules('titulo','TITULO','trim|required|max_length[100]|is_unique[noticia.titulo]');
@@ -35,12 +36,14 @@ class Crud extends CI_Controller {
 		$this->form_validation->set_rules('data', 'DATA', 'trim|required');
 		$this->form_validation->set_rules('imagem', 'IMAGEM', 'trim');
 
+
 		if ($this->form_validation->run() == TRUE):
 			$dados = elements(array('titulo', 'descricao', 'autor', 'data', 'imagem'), $this->input->post());
-			$this->load->model('crud_model');
-
 			$id_noticia = $this->crud_model->insert_noticias($dados);
-			$this->upload->do_upload($id_noticia);
+
+			if ($id_noticia != NULL) {
+				$this->fazUpload($id_noticia);
+			}
 		endif;
 
 		$dados = array(
@@ -50,35 +53,29 @@ class Crud extends CI_Controller {
 		$this->load->view('crud',$dados);
 	}
 
+	public function fazUpload($id_noticia = NULL) {
+		$config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'jpg|jpeg|png';     
+		$config['file_name'] = $id_noticia;
+		$config['overwrite'] = TRUE;
 
-	public function do_upload($id = NULL) {
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'jpg|png';
-        $config['file_name'] = $id;
+		$this->upload->initialize($config);
 
-        $this->load->library('upload', $config);
-
-        $this->upload->do_upload('imagem');
-      
-    }
-
-
-
-
-
-
-
-
-
-
-
+		if ($this->upload->do_upload('imagem')) {
+			$data['dadosArquivo'] = $this->upload->data();
+			$this->crud_model->update_noticia($data['dadosArquivo']['file_name'], $id_noticia);
+		} else {
+			$error = array('error' => $this->upload->display_errors());
+			print_r($error);
+		}
+	}
 
 	public function retrieve() {
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Retrieve',
 			'tela' => 'retrieve',
 			'noticias' => $this->crud_model->selectAll_noticias()->result(),
-			);
+		);
 		$this->load->view('crud',$dados);
 	}
 
@@ -89,8 +86,12 @@ class Crud extends CI_Controller {
 		$this->form_validation->set_rules('imagem', 'IMAGEM', 'trim');
 
 		if ($this->form_validation->run() == TRUE):
+			$id_noticia = $this->input->post('id_noticia');
+
 			$dados = elements(array('descricao','autor', 'data', 'imagem'), $this->input->post());
-		$this->crud_model->update_noticias($dados, array('id' => $this->input->post('id_noticia')));
+			if ($this->crud_model->update_noticias($dados, $this->input->post('id_noticia'))) {
+				$this->fazUpload($id_noticia);
+		    }
 		endif;
 
 		$dados = array(
@@ -100,9 +101,11 @@ class Crud extends CI_Controller {
 		$this->load->view('crud', $dados);
 	}
 
-
 	public function delete() {
 		if ($this->input->post('id_noticia') > 0):
+			$dir = "./uploads/" . $this->input->post('id_noticia') . '.jpg';
+			unlink($dir);
+
 			$this->crud_model->delete_noticias(array('id' => $this->input->post('id_noticia')));
 		endif;
 		
@@ -118,8 +121,6 @@ class Crud extends CI_Controller {
 
 
 
-
-
 	// CRUD USUÁRIOS (C - OK; R - OK; U - ; D - OK;)
 	public function create_usuarios() {
 		$this->form_validation->set_rules('nome','NOME','trim|required|max_length[50]');
@@ -127,11 +128,11 @@ class Crud extends CI_Controller {
 		$this->form_validation->set_rules('senha','SENHA','trim|required|max_length[30]|strtolower');
 		$this->form_validation->set_rules('permissao', 'PERMISSAO', 'trim|required');
 
+
 		if ($this->form_validation->run() == TRUE):
-			$dados = elements(array('login', 'senha', 'nome', 'permissao'),
-				$this->input->post());
-		$this->load->model('crud_model');
-		$this->crud_model->insert_usuarios($dados);
+			$dados = elements(array('login', 'senha', 'nome', 'permissao'), $this->input->post());
+			$dados['senha'] = md5($dados['senha']);
+			$this->crud_model->insert_usuarios($dados);
 		endif;
 
 		$dados = array(
@@ -157,7 +158,8 @@ class Crud extends CI_Controller {
 
 		if ($this->form_validation->run() == TRUE):
 			$dados = elements(array('nome','senha', 'permissao'), $this->input->post());
-		$this->crud_model->update_usuarios($dados, array('id' => $this->input->post('id_user')));
+			$dados['senha'] = md5($dados['senha']);
+			$this->crud_model->update_usuarios($dados, array('id' => $this->input->post('id_user')));
 		endif;
 
 		$dados = array(
@@ -185,8 +187,6 @@ class Crud extends CI_Controller {
 
 
 
-
-
 	public function user_login_process() {
 		$this->form_validation->set_rules('login', 'LOGIN', 'trim|required');
 		$this->form_validation->set_rules('senha', 'SENHA', 'trim|required');
@@ -195,7 +195,7 @@ class Crud extends CI_Controller {
 			$dados = array(
 				'login' => $this->input->post('login'),
 				'senha' => $this->input->post('senha'),
-				);
+			);
 
 			$result = $this->crud_model->session_login($dados);
 
@@ -203,9 +203,8 @@ class Crud extends CI_Controller {
 				$session_data = array(
 					'login' => $result[0],
 					'permissao' => $result[1],
-					);
+				);
 				
-				//session_start();
 				$this->session->set_userdata('usuario', $session_data);
 				
 				$dados2 = array(
@@ -215,8 +214,7 @@ class Crud extends CI_Controller {
 
 				$this->load->view('crud', $dados2);
 			} else {
-				$msg = "deu xabum";
-				$this->load->view('login_form', $msg);
+				$this->load->view('login_form');
 			}
 		}
 	}
@@ -225,9 +223,9 @@ class Crud extends CI_Controller {
 		$dados = array(
 			'login' => '',
 			'permissao' => '',
-			);
+		);
+		$this->session->sess_destroy();
 		$this->session->unset_userdata('usuario', $dados);
-		$msg['message_display'] = 'Successfully Logout';
-		$this->load->view('login_form', $msg);
+		$this->load->view('login_form');
 	}
 }

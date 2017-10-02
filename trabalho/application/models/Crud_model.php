@@ -6,11 +6,12 @@ class Crud_model extends CI_Model{
 	// INSERT
 	public function insert_noticias($dados = NULL){
 		if ($dados != NULL):
-				echo $this->db->insert('noticia', _id())) {
-			}
+			$this->db->insert('noticia', $dados);
+			return $this->db->insert_id();
 		endif;
 	}
 
+	
 	// SELECT
 	public function select_noticias($id = NULL) {
 		if ($id != NULL):
@@ -21,6 +22,7 @@ class Crud_model extends CI_Model{
 			return FALSE;
 		endif;
 	}
+	
 
 	// SELECT ALL
 	public function selectAll_noticias() {
@@ -29,11 +31,20 @@ class Crud_model extends CI_Model{
 	}
 
 	// UPDATE
+	public function update_noticia($imagem = NULL, $id = NULL) {
+		if ($imagem != NULL && $id != NULL) {
+			$this->db->set('imagem', $imagem);
+			$this->db->where('id', $id);
+			$this->db->update('noticia');
+			return true;
+		}
+	}
+
 	public function update_noticias($dados = NULL, $id = NULL) {
 		if ($dados != NULL && $id != NULL):
-			$this->db->update('noticia', $dados, $id);
-			$this->session->set_flashdata('edicaook, Cadastro realizado com sucesso!');
-			redirect('crud/retrieve');
+			$this->db->where('id', $id);
+			$this->db->update('noticia', $dados);
+			return true;
 		endif;
 	}
 
@@ -49,11 +60,21 @@ class Crud_model extends CI_Model{
 
 
 
+
+
+
+
+
+
+
+
+
+
 	// CRUD USUARIOS
 	// INSERT
 	public function insert_usuarios($dados = NULL){
 		if ($dados != NULL):
-			$this->db->insert('usuario',$dados);
+			$this->db->insert('usuario', $dados);
 			$this->session->set_flashdata('cadastrook', 'Cadastro realizado com sucesso!');
 			redirect('crud/retrieve_usuarios');
 		endif;
@@ -72,6 +93,7 @@ class Crud_model extends CI_Model{
 
 	// SELECT ALL
 	public function selectAll_usuarios() {
+		$this->db->order_by('id');
 		return $this->db->get('usuario');
 	}
 
@@ -79,7 +101,6 @@ class Crud_model extends CI_Model{
 	public function update_usuarios($dados = NULL, $id = NULL) {
 		if ($dados != NULL && $id != NULL):
 			$this->db->update('usuario', $dados, $id);
-			$this->session->set_flashdata('edicaook, Cadastro realizado com sucesso!');
 			redirect('crud/retrieve_usuarios');
 		endif;
 	}
@@ -95,12 +116,17 @@ class Crud_model extends CI_Model{
 
 
 
+
+
+
+
+
 	public function session_login($dados = NULL) {	
 		if ($dados != NULL) {
 			if ($dados['login'] == 'admin') {
-				$where = "login = 'admin' AND senha = '" . $dados['senha'] . "'";
+				$where = "login = 'admin' AND senha = '" . md5($dados['senha']) . "'";
 			} else {
-				$where = "login = '" . $dados['login'] . "' AND senha = '" . $dados['senha'] . "'";
+				$where = "login = '" . $dados['login'] . "' AND senha = '" . md5($dados['senha']) . "'";
 			}
 
 			$query = $this->db->query("SELECT * FROM usuario WHERE " . $where . " LIMIT 1");
@@ -114,7 +140,7 @@ class Crud_model extends CI_Model{
 
 				return $vet;
 			} else {
-				return;
+				return -1;
 			}
 		}
 	}

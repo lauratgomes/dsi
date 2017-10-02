@@ -6,16 +6,15 @@ if (isset($this->session->userdata['usuario'])) {
 
 	if ($permissao == 0 || $permissao == 2 || $permissao == 3) {
 				
-		$this->load->view('includes/header');
+		echo "<h2>Cadastro de Usuários</h2>";
 		
-		echo form_open('crud/create');
-		echo validation_errors('<p>','</p>');
-
 		if ($this->session->flashdata('cadastrook')):
 			echo '<p>'.$this->session->flashdata('cadastrook').'</p>';
 		endif;
-
-		echo "<br /><br /><br /><br />";
+		
+		echo form_open_multipart('crud/create');
+		echo "<br /	>";
+        echo "<br /	>";
 		echo form_label('Título: ');
 		echo form_input(array('name'=>'titulo'), set_value('titulo'), 'autofocus');
 		echo "<br />";
@@ -23,20 +22,18 @@ if (isset($this->session->userdata['usuario'])) {
 		echo form_textarea(array('name'=>'descricao'), set_value('descricao'));
 		echo "<br />";
 		echo form_label('Autor: ');
-		echo form_input(array('name'=>'autor'),set_value('autor'));
+		echo form_input(array('name'=>'autor'), set_value('autor'));
 		echo "<br />";
 		echo form_label('Data: ');
 		echo "<input type='date' name='data'>";
 		echo "<br />";
 		echo form_label('Imagem: ');
-		echo form_open_multipart('upload_controller/do_upload');
 		echo "<input type='file' name='imagem'>";
 		echo "<br />";
 		echo form_submit(array('name'=>'cadastrar'), 'Cadastrar');
 		echo form_close();
 
 	} else {
-		echo "<br /><br /><br /><br /><br /><br />Você não tem permissão";
+		include "erro.php";
 	}
-
 }
