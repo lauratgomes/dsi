@@ -43,6 +43,31 @@ CREATE TABLE doencas (
 	descricao	VARCHAR(350)
 );
 
+CREATE TABLE medicamentos (
+	id		SERIAL		PRIMARY KEY,
+	nome	VARCHAR(50)
+);
+
+CREATE TABLE tratamentos (
+	cpf_paciente	CHAR(11)	PRIMARY KEY REFERENCES pacientes(cpf),
+	cpf_medico		CHAR(11)				REFERENCES medicos(cpf),
+	cid				CHAR(4)					REFERENCES doencas(codigo),
+	remedio			INTEGER					REFERENCES medicamentos(id)
+);	
+
+CREATE TABLE registros (
+	id 				SERIAL 			PRIMARY KEY,
+	cpf_paciente	CHAR(11)		REFERENCES pacientes(cpf),
+	cpf_medico		CHAR(11)		REFERENCES medicos(cpf),
+	cid 			CHAR(4)			REFERENCES doencas(codigo),
+	saida 			VARCHAR(5),
+	hora_entrada	CHAR(5),
+	hora_saida		CHAR(5)
+);
+
+# Tratamentos + Registros -> registro
+# Tratamento -> id, cod_registro, remedio
+
 INSERT INTO doencas (codigo, descricao) VALUES ('A00', 'Cólera');
 INSERT INTO doencas (codigo, descricao) VALUES ('A01', 'Febres tifóide e paratifóide');
 INSERT INTO doencas (codigo, descricao) VALUES ('A02', 'Outras infecções por Salmonella');
@@ -2092,10 +2117,7 @@ INSERT INTO doencas (codigo, descricao) VALUES ('Z99', 'Dependência de máquina
 
 
 
-CREATE TABLE medicamentos (
-	id		SERIAL		PRIMARY KEY,
-	nome	VARCHAR(50)
-);
+
 
 
 INSERT INTO medicamentos (nome) VALUES ('Acetato de medroxiprogesterona');
@@ -2168,19 +2190,3 @@ INSERT INTO medicamentos (nome) VALUES ('Tiabendazol');
 INSERT INTO medicamentos (nome) VALUES ('Valproato de Sódio');
 INSERT INTO medicamentos (nome) VALUES ('Verapamila');
 
-
-CREATE TABLE tratamentos (
-	cpf_paciente	CHAR(11)	PRIMARY KEY REFERENCES pacientes(cpf),
-	cpf_medico		CHAR(11)				REFERENCES medicos(cpf),
-	cid				CHAR(4)					REFERENCES doencas(codigo),
-	remedio			INTEGER					REFERENCES medicamentos(id)
-);	
-
-
-CREATE TABLE registros (
-	id 				SERIAL 			PRIMARY KEY,
-	cpf_paciente	CHAR(11)		REFERENCES pacientes(cpf),
-	cpf_medico		CHAR(11)		REFERENCES medicos(cpf),
-	cid 			CHAR(4)			REFERENCES doencas(codigo),
-	saida 			VARCHAR(5)
-);

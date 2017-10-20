@@ -2,13 +2,13 @@
 
 class Tratamento_model extends CI_Model{
 
-	// CRUD TRATAMENTOS
+	// CRUD_Tratamento TRATAMENTOS
 	// INSERT
 	public function insert_tratamentos($dados = NULL){
 		if ($dados != NULL):
 			$this->db->insert('tratamentos', $dados);
 			$this->session->set_flashdata('cadastrook', 'Cadastro realizado com sucesso!');
-			redirect('crud/retrieve_tratamentos');
+			redirect('CRUD_Tratamento/retrieve_tratamentos');
 		endif;
 	}
 
@@ -32,9 +32,10 @@ class Tratamento_model extends CI_Model{
 	// UPDATE
 	public function update_tratamentos($dados = NULL, $cpf = NULL) {
 		if ($dados != NULL && $cpf != NULL):
-			$this->db->update('tratamentos', $dados);
+			//var_dump($cpf);
 			$this->db->where('cpf_paciente', $cpf);
-			redirect('crud/retrieve_tratamentos');
+			$this->db->update('tratamentos', $dados);
+			redirect('CRUD_Tratamento/retrieve_tratamentos');
 		endif;
 	}
 
@@ -43,7 +44,7 @@ class Tratamento_model extends CI_Model{
 		if ($cpf != NULL):
 			$this->db->delete('tratamentos', $cpf);
 			$this->session->set_flashdata('exclusaook', 'Registro excluído com sucesso!');
-			redirect('crud/retrieve_tratamentos');
+			redirect('CRUD_Tratamento/retrieve_tratamentos');
 		endif;
 	}
 }

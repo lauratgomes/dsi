@@ -18,7 +18,7 @@ class CRUD_Tratamento extends CI_Controller {
 	
 	// CRUD TRATAMENTOS (C - ; R - ; U - ; D - ;)
 	public function create_tratamentos() {
-		$this->form_validation->set_rules('cpf_paciente','CPF_PACIENTE','required|is_unique[tratamento.cpf_paciente]');
+		$this->form_validation->set_rules('cpf_paciente','CPF_PACIENTE','required|is_unique[tratamentos.cpf_paciente]');
 		$this->form_validation->set_rules('cpf_medico','CPF_MEDICO', 'required');
 		$this->form_validation->set_rules('cid','CID','required');
 		$this->form_validation->set_rules('remedio', 'REMEDIO', 'required');
@@ -52,10 +52,7 @@ class CRUD_Tratamento extends CI_Controller {
 
 		if ($this->form_validation->run() == TRUE):
 			$dados = elements(array('cpf_medico', 'cid', 'remedio'), $this->input->post());
-			var_dump($dados);
-			echo "<br />";
-			echo $this->input->post('id_tratamento');
-			//$this->Tratamento_model->update_tratamentos($dados, array('cpf_paciente' => $this->input->post('id_tratamento')));
+			$this->Tratamento_model->update_tratamentos($dados, $this->input->post('id_tratamento'));
 		endif;
 
 		$dados = array(
@@ -66,8 +63,10 @@ class CRUD_Tratamento extends CI_Controller {
 	}
 
 	public function delete_tratamentos() {
-		if ($this->input->post('id_tratamento') > 0):
-			$this->Tratamento_model->delete_tratamentos(array('id' => $this->input->post('id_tratamento')));
+		$id_tratamento = $this->input->post('id_tratamento');
+
+		if ($id_tratamento > 0):
+			$this->Tratamento_model->delete_tratamentos(array('cpf_paciente' => $id_tratamento));
 		endif;
 		
 		$dados = array(

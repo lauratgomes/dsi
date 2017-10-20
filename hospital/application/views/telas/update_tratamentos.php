@@ -8,7 +8,7 @@
 
     	echo "<h2> Edição de Tratamento </h2>";
 
-    	echo form_open('CRUD_Tratamento/update_tratamentos/$id_tratamento');
+    	echo form_open("CRUD_Tratamento/update_tratamentos/$id_tratamento");
 
     	if ($this->session->flashdata('edicaook')):
 			echo '<p>' . $this->session->flashdata('edicaook') . '</p>';

@@ -14,6 +14,7 @@ class CRUD_Usuario extends CI_Controller {
 		$this->load->library('table');
 		$this->load->library('upload');
 		$this->load->model('Usuario_model');
+		$this->load->model('Paciente_model');
 	}
 	
 	public function index() {
@@ -27,7 +28,7 @@ class CRUD_Usuario extends CI_Controller {
 	// CRUD USUÁRIOS (C - ; R - OK; U - OK; D - OK;)
 	public function create_usuarios() {
 		$this->form_validation->set_rules('nome','NOME','trim|required|max_length[40]');
-		$this->form_validation->set_rules('login','LOGIN', 'trim|required|max_length[25]|is_unique[usuario.login]');
+		$this->form_validation->set_rules('login','LOGIN', 'trim|required|max_length[25]|is_unique[usuarios.login]');
 		$this->form_validation->set_rules('senha','SENHA','trim|required|max_length[32]');
 		$this->form_validation->set_rules('admin', 'ADMIN', 'required');
 
@@ -54,8 +55,8 @@ class CRUD_Usuario extends CI_Controller {
 	}
 
 	public function update_usuarios() {
-		$this->form_validation->set_rules('nome','NOME', 'trim|required|max_length[50]');
-		$this->form_validation->set_rules('senha','SENHA','trim|required|max_length[30]|strtolower');
+		$this->form_validation->set_rules('nome','NOME', 'trim|required|max_length[40]');
+		$this->form_validation->set_rules('senha','SENHA','trim|required|max_length[32]');
 		$this->form_validation->set_rules('admin', 'ADMIN', 'required');
 
 		if ($this->form_validation->run() == TRUE):

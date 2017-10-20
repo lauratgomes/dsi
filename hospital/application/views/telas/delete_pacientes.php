@@ -8,7 +8,7 @@
 
     	echo "<h2>Saída do(a) Paciente: $query->nome </h2>";
 
-        echo form_open('CRUD_Paciente/delete_pacientes/$id_paciente');
+        echo form_open("CRUD_Paciente/delete_pacientes/$id_paciente");
 
        	if ($this->session->flashdata('edicaook')):
 			echo '<p>' . $this->session->flashdata('edicaook') . '</p>';
@@ -37,6 +37,9 @@
                 <option value='alta'> Alta médica </option>
                 <option value='morte'> Óbito </option>
               </select>";
+        echo "<br />";
+        echo form_label('Horário da saída: ');
+        echo form_input(array('name'=>'hora_saida', 'placeholder'=>'HH:MM', set_value('hora_saida')));
         echo "<br />";
 		echo form_submit(array('name'=>'cadastrar'), 'Excluir');
 		echo form_hidden('id_paciente', $query->cpf);

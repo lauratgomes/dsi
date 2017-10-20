@@ -48,10 +48,12 @@ class Paciente_model extends CI_Model{
 	}
 
 
-	public function registra_saidas($dados = NULL, $saida = NULL) {
-		if ($dados != NULL && $saida != NULL) {
-			var_dump($dados);
-			//$this->db->insert('registros', $dados)
+	public function registra_saidas($dados = NULL, $saida = NULL, $hora_saida = NULL) {
+		if ($dados != NULL && $saida != NULL && $hora_saida != NULL) {
+			//$insert = "INSERT INTO registros (cpf_paciente, cpf_medico, cid, saida, hora_saida) VALUES ('" . $dados->id . "', '" . $dados[1] . "', '" . $dados[2] . "', '" . $saida . "', '" . $hora_saida . "');";
+			//echo $insert;
+			//$query = $this->db->query($insert);
+			$this->db->insert('registros', $dados, $saida, $hora_saida);
 		}
 	}
 }

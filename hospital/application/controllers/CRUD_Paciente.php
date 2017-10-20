@@ -18,7 +18,7 @@ class CRUD_Paciente extends CI_Controller {
 	
 	// CRUD PACIENTES (C - ; R - OK; U - ; D - ;)
 	public function create_pacientes() {
-		$this->form_validation->set_rules('cpf', 'CPF', 'trim|required|max_length[14]|is_unique[paciente.cpf]');
+		$this->form_validation->set_rules('cpf', 'CPF', 'trim|required|max_length[14]|is_unique[pacientes.cpf]');
 		$this->form_validation->set_rules('rg','RG','trim|required|max_length[10]');
 		$this->form_validation->set_rules('nome','NOME','trim|required|max_length[50]');
 		$this->form_validation->set_rules('telefone','TELEFONE','trim|required|max_length[14]');
@@ -68,8 +68,11 @@ class CRUD_Paciente extends CI_Controller {
 	public function delete_pacientes() {
 		$id_paciente = $this->input->post('id_paciente');
 		if ($id_paciente > 0):
-			$saida = $this->imput->post('saida');
-			$this->Paciente_model->registra_saidas($this->select_pacientes($id_paciente), $saida);
+			$paciente = $this->Paciente_model->select_pacientes($id_paciente)->row();
+			$saida = $this->input->post('saida');
+			$hora_saida = $this->input->post('hora_saida');
+
+			$this->Paciente_model->registra_saidas($paciente, $saida, $hora_saida);
 			//$this->Paciente_model->delete_pacientes(array('id' => $this->input->post('id_paciente')));
 		endif;
 		
