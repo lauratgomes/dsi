@@ -1,0 +1,87 @@
+HOSPITAL
+TABELAS:
+	- Doenças
+		codigo (CID), descrição
+	- Medicamentos
+		id, nome
+	- Médicos
+		CPF, CRM/COREN, nome, data de nascimento, CEP, rua, complemento
+	- Pacientes
+		CPF, RG, nome, telefone, rua, complemento
+	- Quartos
+		id, limite de pacientes, vago
+	- Registros
+		id, CPF do paciente, CPF do médico, CID, motivo da saída
+	- Tratamentos
+		CPF do paciente, CPF do médico, CID, remédio
+	- Usuários
+		id, nome, login, senha, admin
+
+
+FUNCIONALIDADES:
+	- Read doenças
+	- CRUD Medicamentos
+	- CRUD Médicos
+	- CRUD Pacientes
+	- CRUD Quartos
+	- Create e Read Registros
+	- CRUD Tratamentos
+	- CRUD Usuários
+
+
+	Pelo menos 1 administrador será previamente adicionado no banco.
+	Os administradores terão acesso a todas as funcionalidade do site.
+
+	O restante dos usuários terá acesso:
+		- CRUD e pesquisar Pacientes
+		- Read e pesquisar Doenças
+		- Read e pesquisar Médicos
+		- Read e pesquisar Medicamentos
+		- Adicionar pacientes aos quartos
+		- CRUD Tratamentos
+
+
+	DELETE PACIENTES
+		Ao excluir um paciente terá um campo no formulário em que o usuário deverá informar o motivo da saída do paciente (alta hospital ou óbito). Se a segunda opção for escolhida será gerado um documento com as informações do óbito do paciente. Posteriormente o paciente será excluído da tabela Pacientes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CLUBE DAS WINX
+- Tabelas
+	Escolas
+	Professores
+	Disciplinas
+	Alunos -> Especialistas, Fadas, Bruxas
+	Poderes
+	Pixies
+	Reinos
+	Administradores
+
+
+ADMINISTRADOR: Terá acesso a todas as funcionalidades do site
+	Terá 4 administradores, sendo três (diretores de cada escola)
+	O adminstrador principal poderá:
+		adicionar, listar, editar e excluir todos os itens das tabelas
+
+	Cada Diretor poderá:
+		adicionar, listar, editar e excluir: professores, disciplinas, alunos, poderes
+		Para cada diretor terá uma página personalizada (Alfea, Torre Nebulosa e Fonte Rubra)
+	
+	Alunos (fadas) poderão:
+		adicionar, listar, editar e excluir pixies
