@@ -6,6 +6,12 @@
 			echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
 		endif;
 
+		echo form_open('CRUD_Medicamento/pesquisa_medicamentos');
+		echo form_label('Nome: ');
+        echo form_input(array('name'=>'nome'), set_value('nome'), 'autofocus');
+        echo form_submit(array('name'=>'cadastrar'), 'Pesquisar');
+        echo form_close();
+
 		if ($this->session->userdata('admin') == true) {
 			$this->table->set_heading('ID', 'Nome', '', '');
 			foreach ($medicamentos as $linha):

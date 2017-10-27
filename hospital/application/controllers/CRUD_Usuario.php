@@ -109,7 +109,7 @@ class CRUD_Usuario extends CI_Controller {
 					$this->retrieve_usuarios();
 				} else {
 					$this->session->set_userdata('admin', false);
-					$this->Paciente_model->retrieve_pacientes();
+					$this->Paciente_model->selectAll_pacientes();
 				}
 			} else {
 				$this->session->set_userdata('logado', false);

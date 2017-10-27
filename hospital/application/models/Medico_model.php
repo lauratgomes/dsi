@@ -46,4 +46,14 @@ class Medico_model extends CI_Model{
 			redirect('CRUD_Medico/retrieve_medicos');
 		endif;
 	}
+
+
+
+	public function search_medicos($nome = NULL) {
+		if ($nome != NULL) {
+			$this->db->like('nome', $nome, 'both');
+			$this->db->order_by('cpf');
+			return $this->db->get('medicos');
+		} 
+	}
 }

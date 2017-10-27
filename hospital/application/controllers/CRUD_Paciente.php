@@ -14,6 +14,8 @@ class CRUD_Paciente extends CI_Controller {
 		$this->load->library('table');
 		$this->load->library('upload');
 		$this->load->model('Paciente_model');
+		$this->load->model('Registro_model');
+		$this->load->model('Tratamento_model');
 	}
 	
 	// CRUD PACIENTES (C - ; R - OK; U - ; D - ;)
@@ -66,19 +68,42 @@ class CRUD_Paciente extends CI_Controller {
 	}
 
 	public function delete_pacientes() {
-		$id_paciente = $this->input->post('id_paciente');
-		if ($id_paciente > 0):
-			$paciente = $this->Paciente_model->select_pacientes($id_paciente)->row();
-			$saida = $this->input->post('saida');
-			$hora_saida = $this->input->post('hora_saida');
-
-			$this->Paciente_model->registra_saidas($paciente, $saida, $hora_saida);
-			//$this->Paciente_model->delete_pacientes(array('id' => $this->input->post('id_paciente')));
+		$cpf_paciente = $this->input->post('cpf_paciente');
+		if ($cpf_paciente > 0):
+			$saida = array('cpf_paciente'=>$cpf_paciente, 'data_hora_saida'=>$this->input->post('data_hora_saida'), 'saida'=>$this->input->post('saida'));
+			$vetor = elements(array('cpf_paciente', 'data_hora_saida', 'saida'), $saida);
+			
+			$id_registro = $this->Registro_model->registra_saidas($vetor);
+			
+			if ($id_registro != -1) {
+				if ($saida == 'morte') {
+					$dados = $this->Registro_model->select_registros($id_registro);
+					
+					//$this->Paciente_model->gera_certidao_obito($dados);
+				}
+				echo "oie";
+				$tratamento = $this->Tratamentos_model->select_tratamento_registro($id_registro);
+				var_dump($tratamento);
+				//$this->Tratamentos_model->delete_tratamentos($id_tratamento);
+				//$this->Paciente_model->delete_pacientes(array('id' => $cpf_paciente));
+			}
 		endif;
 		
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Delete',
 			'tela' => 'delete_pacientes',
+		);
+		$this->load->view('crud', $dados);
+	}
+
+
+	public function pesquisa_pacientes() {
+		$nome = $this->input->post('nome');
+
+		$dados = array(
+			'titulo' => 'CRUD &raquo; Retrieve',
+			'tela' => 'retrieve_pacientes',
+			'pacientes' => $this->Paciente_model->search_pacientes($nome)->result(),
 		);
 		$this->load->view('crud', $dados);
 	}

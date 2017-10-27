@@ -67,4 +67,15 @@ class CRUD_Medicamento extends CI_Controller {
 			);
 		$this->load->view('crud', $dados);
 	}
+
+	public function pesquisa_medicamentos() {
+		$nome = $this->input->post('nome');
+
+		$dados = array(
+			'titulo' => 'CRUD &raquo; Retrieve',
+			'tela' => 'retrieve_medicamentos',
+			'medicamentos' => $this->Medicamento_model->search_medicamentos($nome)->result(),
+		);
+		$this->load->view('crud', $dados);
+	}
 }

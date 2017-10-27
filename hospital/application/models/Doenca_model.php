@@ -21,16 +21,20 @@ class Doenca_model extends CI_Model{
 
 	// SEARCH
 	public function search_doencas($codigo = NULL, $descricao = NULL) {
-		if ($codigo != NULL || $descricao != NULL) {
-			if ($codigo != NULL) {
-				$this->db->like('codigo', '$codigo', 'both');
-			} else {
-				$this->db->like('descricao', '$descricao', 'both');
-			}
-
-			return $this->db->get('doencas');
-		} else {
-			return -1;
+		if ($codigo != NULL && $descricao != NULL) {
+			$array = array('codigo'=>$codigo, 'descricao'=>$descricao);
+			$this->db->like($array);
 		}
+
+		if ($codigo != NULL && $descricao == NULL) {
+			$this->db->like('codigo', $codigo, 'both');
+		} 
+
+		if ($descricao != NULL && $codigo == NULL) {
+			$this->db->like('descricao', $descricao, 'after');
+		}
+
+		$this->db->order_by('codigo');
+		return $this->db->get('doencas');
 	}
 }

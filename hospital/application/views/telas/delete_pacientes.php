@@ -1,14 +1,14 @@
 <?php
     if ($this->session->userdata('logado') == true) {
 
-    	$id_paciente = $this->uri->segment(3);
-    	if ($id_paciente == NULL) redirect('CRUD_Paciente/retrieve_pacientes');
+    	$cpf_paciente = $this->uri->segment(3);
+    	if ($cpf_paciente == NULL) redirect('CRUD_Paciente/retrieve_pacientes');
 
-    	$query = $this->Paciente_model->select_pacientes($id_paciente)->row();
+    	$query = $this->Paciente_model->select_pacientes($cpf_paciente)->row();
 
     	echo "<h2>Saída do(a) Paciente: $query->nome </h2>";
 
-        echo form_open("CRUD_Paciente/delete_pacientes/$id_paciente");
+        echo form_open("CRUD_Paciente/delete_pacientes/$cpf_paciente");
 
        	if ($this->session->flashdata('edicaook')):
 			echo '<p>' . $this->session->flashdata('edicaook') . '</p>';
@@ -38,11 +38,11 @@
                 <option value='morte'> Óbito </option>
               </select>";
         echo "<br />";
-        echo form_label('Horário da saída: ');
-        echo form_input(array('name'=>'hora_saida', 'placeholder'=>'HH:MM', set_value('hora_saida')));
+        echo form_label('Data e hora da saída: ');
+        echo form_input(array('name'=>'data_hora_saida', 'type'=>'datetime-local', set_value('data_hora_saida')));
         echo "<br />";
 		echo form_submit(array('name'=>'cadastrar'), 'Excluir');
-		echo form_hidden('id_paciente', $query->cpf);
+		echo form_hidden('cpf_paciente', $query->cpf);
 		echo form_close();
 	} else {
 		include "erro.php";

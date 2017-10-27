@@ -4,7 +4,7 @@
     	$id_tratamento = $this->uri->segment(3);
 		if ($id_tratamento == NULL) redirect('CRUD_Tratamento/retrieve_tratamentos');
 
-		$query = $this->Tratamento_model->select_tratamentos($id_tratamento)->row();
+        $query = $this->Registro_model->select_registros($id_tratamento)->row();
 
     	echo "<h2> Edição de Tratamento </h2>";
 
@@ -27,7 +27,7 @@
         echo "Caso você não saiba o código do remédio, descubra clicando " . anchor("CRUD_Medicamento/retrieve_medicamentos", 'aqui', ['target' => '_blank']);  
         echo "<br />";
         echo form_submit(array('name'=>'cadastrar'), 'Cadastrar');
-        echo form_hidden('id_tratamento', $query->cpf_paciente);
+        echo form_hidden('id_tratamento', $query->id);
 		echo form_close();
     } else {
       include "erro.php";

@@ -77,4 +77,16 @@ class CRUD_Medico extends CI_Controller {
 		);
 		$this->load->view('crud', $dados);
 	}
+
+
+	public function pesquisa_medicos() {
+		$nome = $this->input->post('nome');
+
+		$dados = array(
+			'titulo' => 'CRUD &raquo; Retrieve',
+			'tela' => 'retrieve_medicos',
+			'medicos' => $this->Medico_model->search_medicos($nome)->result(),
+		);
+		$this->load->view('crud', $dados);
+	}
 }

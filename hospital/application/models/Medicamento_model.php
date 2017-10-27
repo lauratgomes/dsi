@@ -45,4 +45,13 @@ class Medicamento_model extends CI_Model{
 			redirect('CRUD_Medicamento/retrieve_medicamentos');
 		endif;
 	}
+
+
+	public function search_medicamentos($nome = NULL) {
+		if ($nome != NULL) {
+			$this->db->like('nome', $nome, 'both');
+			$this->db->order_by('id');
+			return $this->db->get('medicamentos');
+		} 
+	}
 }

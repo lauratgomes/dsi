@@ -6,5 +6,6 @@
     <li> <?php echo anchor('CRUD_Tratamento/create_tratamentos','Adicionar tratamentos') ?> </li>
     <li> <?php echo anchor('CRUD_Tratamento/retrieve_tratamentos','Listar Tratamentos') ?> </li>
     <li> <?php echo anchor('CRUD_Medico/retrieve_medicos','Listar médicos') ?> </li>
+    <li> <?php echo anchor('CRUD_Registro/retrieve_registros','Listar registros') ?> </li>
     <li> <?php echo anchor('CRUD_Usuario/logout', 'Logout') ?> </li>
 </ul>
