@@ -18,6 +18,7 @@ class CRUD_Paciente extends CI_Controller {
 		$this->load->model('Tratamento_model');
 	}
 	
+
 	// CRUD PACIENTES (C - ; R - OK; U - ; D - ;)
 	public function create_pacientes() {
 		$this->form_validation->set_rules('cpf', 'CPF', 'trim|required|max_length[14]|is_unique[pacientes.cpf]');
@@ -40,6 +41,7 @@ class CRUD_Paciente extends CI_Controller {
 		$this->load->view('crud', $dados);
 	}
 
+
 	public function retrieve_pacientes() {
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Retrieve',
@@ -49,6 +51,7 @@ class CRUD_Paciente extends CI_Controller {
 		$this->load->view('crud', $dados);
 	}
 
+
 	public function update_pacientes() {
 		$this->form_validation->set_rules('nome','NOME','trim|required|max_length[50]');
 		$this->form_validation->set_rules('telefone','TELEFONE','trim|required|max_length[14]');
@@ -56,8 +59,8 @@ class CRUD_Paciente extends CI_Controller {
 		$this->form_validation->set_rules('complemento', 'COMPLEMENTO', 'trim|required|max_length[20]');
 
 		if ($this->form_validation->run() == TRUE):
-			$dados = elements(array('nome', 'telefone', 'rua', 'complemento'), $this->input->post());
-			$this->Paciente_model->update_pacientes($dados, array('cpf' => $this->input->post('id_paciente')));
+			$dados = array('nome'=>$this->input->post('nome'), 'telefone'=>$this->input->post('telefone'), 'rua'=>$this->input->post('rua'), 'complemento'=>$this->input->post('complemento'));
+			$this->Paciente_model->update_pacientes($dados, $this->input->post('cpf_paciente'));
 		endif;
 
 		$dados = array(
@@ -67,25 +70,25 @@ class CRUD_Paciente extends CI_Controller {
 		$this->load->view('crud', $dados);
 	}
 
+
 	public function delete_pacientes() {
 		$cpf_paciente = $this->input->post('cpf_paciente');
+
 		if ($cpf_paciente > 0):
 			$saida = array('cpf_paciente'=>$cpf_paciente, 'data_hora_saida'=>$this->input->post('data_hora_saida'), 'saida'=>$this->input->post('saida'));
-			$vetor = elements(array('cpf_paciente', 'data_hora_saida', 'saida'), $saida);
 			
-			$id_registro = $this->Registro_model->registra_saidas($vetor);
+			$retorno = $this->Registro_model->registra_saidas($saida);
 			
-			if ($id_registro != -1) {
+			if ($retorno != -1) {
 				if ($saida == 'morte') {
 					$dados = $this->Registro_model->select_registros($id_registro);
 					
 					//$this->Paciente_model->gera_certidao_obito($dados);
 				}
-				echo "oie";
+
 				$tratamento = $this->Tratamentos_model->select_tratamento_registro($id_registro);
-				var_dump($tratamento);
-				//$this->Tratamentos_model->delete_tratamentos($id_tratamento);
-				//$this->Paciente_model->delete_pacientes(array('id' => $cpf_paciente));
+				$this->Tratamentos_model->delete_tratamentos($id_tratamento);
+				$this->Paciente_model->delete_pacientes(array('id' => $cpf_paciente));
 			}
 		endif;
 		

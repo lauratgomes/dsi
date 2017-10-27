@@ -46,6 +46,7 @@ class CRUD_Tratamento extends CI_Controller {
 		$this->load->view('crud', $dados);
 	}
 
+
 	public function retrieve_tratamentos() {
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Retrieve',
@@ -55,26 +56,28 @@ class CRUD_Tratamento extends CI_Controller {
 		$this->load->view('crud',$dados);
 	}
 
+
 	public function update_tratamentos() {
 		$this->form_validation->set_rules('cpf_medico','CPF_MEDICO', 'required');
 		$this->form_validation->set_rules('cid','CID','required');
 		$this->form_validation->set_rules('remedio', 'REMEDIO', 'required');
 
 		if ($this->form_validation->run() == TRUE):
-			$dados = elements(array('cpf_medico', 'cid'), $this->input->post());
 			$remedio =  elements(array('remedio'), $this->input->post());
-
 			$id_registro = $this->Tratamento_model->update_tratamentos($remedio, $this->input->post('id_tratamento'));
-			var_dump($id_registro);
-			//$this->Registro_model->update_registros($dados, $id_registro);
+		
+			$dados = elements(array('cpf_medico', 'cid', 'quarto'), $this->input->post());
+			$this->Registro_model->update_registros($dados, $id_registro);
 		endif;
 
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Update',
 			'tela' => 'update_tratamentos',
+			'quartos' => $this->Quarto_model->selectAll_quartos()->result(),
 		);
 		$this->load->view('crud', $dados);
 	}
+
 
 	public function delete_tratamentos() {
 		$id_tratamento = $this->input->post('id_tratamento');

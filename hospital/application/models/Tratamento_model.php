@@ -52,12 +52,10 @@ class Tratamento_model extends CI_Model{
 		if ($remedio != NULL && $id_tratamento != NULL):
 			$this->db->update('tratamentos', $remedio);
 			$this->db->where('id', $id_tratamento);
-
-			$this->db->select('id_registro');
-			$this->db->from('tratamentos');
-			$this->db->where('id', $id_tratamento);
-			$id_registro = $this->db->get()->result();
-			return $id_registro;
+			$registro = $this->select_registros($id_tratamento);
+			
+			$res = $registro->result();
+			return $res[0]->id_registro;
 		endif;
 	}
 

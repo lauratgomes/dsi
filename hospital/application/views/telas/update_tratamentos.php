@@ -26,6 +26,13 @@
         echo form_input(array('name'=>'remedio'), set_value('remedio', $query->remedio));
         echo "Caso você não saiba o código do remédio, descubra clicando " . anchor("CRUD_Medicamento/retrieve_medicamentos", 'aqui', ['target' => '_blank']);  
         echo "<br />";
+        echo form_label('Escolha um quarto: ');
+        echo "<select name='quarto'>";
+               foreach ($quartos as $linha) {
+                   echo "<option value=$linha->id> $linha->id </option>";
+               }
+        echo "</select>";
+        echo "<br />";
         echo form_submit(array('name'=>'cadastrar'), 'Cadastrar');
         echo form_hidden('id_tratamento', $query->id);
 		echo form_close();

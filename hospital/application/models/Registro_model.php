@@ -30,23 +30,20 @@ class Registro_model extends CI_Model{
 	}
 
 	// UPDATE
-	public function update_registros($dados = NULL, $id = NULL) {
-		if ($dados != NULL && $id != NULL):
+	public function update_registros($dados = NULL, $id_registro = NULL) {
+		if ($dados != NULL && $id_registro != NULL):
 			$this->db->update('registros', $dados);
-			$this->db->where('id', $id);
-			return true;
-			//redirect('CRUD_Registro/retrieve_registros');
+			$this->db->where('id', $id_registro);
+			redirect('CRUD_Registro/retrieve_registros');
 		endif;
 	}
 
 	public function registra_saidas($dados = NULL) {
 		if ($dados != NULL) {
-			if ($this->db->update('registros', $dados)) {
-				return $this->db->id();
-			}
-			else {
-				return -1;
-			}
+			$this->db->update('registros', $dados);
+			
+		} else {
+			return -1;
 		}
 	}
 }
