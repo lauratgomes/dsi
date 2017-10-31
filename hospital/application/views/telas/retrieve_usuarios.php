@@ -1,7 +1,14 @@
 <?php
 	if ($this->session->userdata('logado') == true && $this->session->userdata('admin') == true) {
-		
-		echo "<h2>Lista de Usuários</h2>";
+		echo "<br>";
+		echo "<div class='container-fluid'>";
+		echo 	"<div class='row align-items-center justify-content-center'>";
+		echo 		"<div class='col-md-11'>";
+		echo 			"<div class='card'>";
+		echo 				"<div class='card-header card-title'>";
+		echo 					"<h4 class='text-center'>Usuários</h4>";
+		echo 				"</div>";
+
 
 		if ($this->session->flashdata('exclusaook')):
 			echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
@@ -19,6 +26,12 @@
 			}
 		endforeach;
 		echo $this->table->generate();
+		echo 			"</div>";
+echo 		"</div>";
+echo 				"</div>";
+echo 			"</div>";
+echo 		"</div>";
+echo "</div>";
 	} else {
 		include "erro.php";
 	}

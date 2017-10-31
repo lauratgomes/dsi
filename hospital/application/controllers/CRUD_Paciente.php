@@ -77,18 +77,19 @@ class CRUD_Paciente extends CI_Controller {
 		if ($cpf_paciente > 0):
 			$saida = array('cpf_paciente'=>$cpf_paciente, 'data_hora_saida'=>$this->input->post('data_hora_saida'), 'saida'=>$this->input->post('saida'));
 			
-			$retorno = $this->Registro_model->registra_saidas($saida);
+
+			$id_registro = $this->Registro_model->select_registros_paciente($cpf_paciente);
+			$retorno = $this->Registro_model->registra_saidas($saida, $id_registro);
 			
 			if ($retorno != -1) {
 				if ($saida == 'morte') {
 					$dados = $this->Registro_model->select_registros($id_registro);
-					
-					//$this->Paciente_model->gera_certidao_obito($dados);
+					$this->Paciente_model->gera_certidao_obito($dados);
 				}
 
-				$tratamento = $this->Tratamentos_model->select_tratamento_registro($id_registro);
-				$this->Tratamentos_model->delete_tratamentos($id_tratamento);
-				$this->Paciente_model->delete_pacientes(array('id' => $cpf_paciente));
+				$id_tratamento = $this->Tratamento_model->select_tratamento_registro($id_registro);
+				$this->Tratamento_model->delete_tratamentos($id_tratamento);
+				$this->Paciente_model->delete_pacientes($cpf_paciente);
 			}
 		endif;
 		

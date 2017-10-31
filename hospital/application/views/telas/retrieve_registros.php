@@ -1,7 +1,13 @@
 <?php
     if ($this->session->userdata('logado') == true) {
-		
-		echo "<h2> Registros </h2>";
+		echo "<br>";
+		echo "<div class='container-fluid'>";
+		echo 	"<div class='row align-items-center justify-content-center'>";
+		echo 		"<div class='col-md-11'>";
+		echo 			"<div class='card'>";
+		echo 				"<div class='card-header card-title'>";
+		echo 					"<h4 class='text-center'>Registros</h4>";
+		echo 				"</div>";
 
 		if ($this->session->flashdata('exclusaook')):
 			echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
@@ -17,6 +23,12 @@
 			$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->quarto, $linha->remedio, $linha->data_hora_entrada, $linha->data_hora_saida, $linha->saida);
 		endforeach;
 		echo $this->table->generate();
+		echo 			"</div>";
+		echo 		"</div>";
+		echo 				"</div>";
+		echo 			"</div>";
+		echo 		"</div>";
+		echo "</div>";
 	} else {
 		include "erro.php";
 	}

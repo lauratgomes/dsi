@@ -56,7 +56,7 @@ class CRUD_Medico extends CI_Controller {
 
 		if ($this->form_validation->run() == TRUE):
 			$dados = elements(array('nome','nascimento', 'cep', 'rua', 'complemento'), $this->input->post());
-			$this->Medico_model->update_medicos($dados, array('id' => $this->input->post('id_medico')));
+			$this->Medico_model->update_medicos($dados, $this->input->post('id_medico'));
 		endif;
 
 		$dados = array(

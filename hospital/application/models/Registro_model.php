@@ -23,6 +23,19 @@ class Registro_model extends CI_Model{
 		endif;
 	}
 
+	public function select_registros_paciente($cpf_paciente = NULL) {
+		if ($cpf_paciente != NULL):
+			$where = "cpf_paciente = '$cpf_paciente' AND data_hora_saida IS NULL";
+
+			$this->db->select('id');
+			$this->db->where($where);
+			$teste = $this->db->get('registros');
+			$t = $teste->result();
+
+			return $t[0]->id;
+		endif;
+	}
+
 	// SELECT ALL
 	public function selectAll_registros() {
 		$this->db->join('tratamentos', 'tratamentos.$id_registro = registros.id', 'inner');
@@ -32,16 +45,16 @@ class Registro_model extends CI_Model{
 	// UPDATE
 	public function update_registros($dados = NULL, $id_registro = NULL) {
 		if ($dados != NULL && $id_registro != NULL):
-			$this->db->update('registros', $dados);
 			$this->db->where('id', $id_registro);
+			$this->db->update('registros', $dados);
 			redirect('CRUD_Registro/retrieve_registros');
 		endif;
 	}
 
-	public function registra_saidas($dados = NULL) {
-		if ($dados != NULL) {
-			$this->db->update('registros', $dados);
-			
+	public function registra_saidas($saida = NULL, $id_registro) {
+		if ($saida != NULL) {
+			$this->db->update('registros', $saida);
+			$this->db->where('id', $id_registro);			
 		} else {
 			return -1;
 		}

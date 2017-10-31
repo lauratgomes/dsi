@@ -32,8 +32,8 @@ class Quarto_model extends CI_Model{
 	// UPDATE
 	public function update_quartos($dados = NULL, $id = NULL) {
 		if ($dados != NULL && $id != NULL):
-			$this->db->update('quartos', $dados);
 			$this->db->where('id', $id);
+			$this->db->update('quartos', $dados);
 			redirect('CRUD_Quarto/retrieve_quartos');
 		endif;
 	}

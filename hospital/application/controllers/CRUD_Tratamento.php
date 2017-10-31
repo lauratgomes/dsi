@@ -66,7 +66,7 @@ class CRUD_Tratamento extends CI_Controller {
 			$remedio =  elements(array('remedio'), $this->input->post());
 			$id_registro = $this->Tratamento_model->update_tratamentos($remedio, $this->input->post('id_tratamento'));
 		
-			$dados = elements(array('cpf_medico', 'cid', 'quarto'), $this->input->post());
+			$dados = array('cpf_medico'=>$this->input->post('cpf_medico'), 'cid'=>$this->input->post('cid'), 'quarto'=>$this->input->post('quarto'));
 			$this->Registro_model->update_registros($dados, $id_registro);
 		endif;
 

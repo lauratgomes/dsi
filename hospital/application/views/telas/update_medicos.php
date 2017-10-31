@@ -31,6 +31,7 @@
 		echo form_label('Complemento: ');
 		echo form_input(array('name'=>'complemento'), set_value('complemento', $query->complemento));
 		echo form_submit(array('name'=>'cadastrar'), 'Cadastrar');
+		echo form_hidden('id_medico', $query->cpf);
 		echo form_close();
 			
 	} else {

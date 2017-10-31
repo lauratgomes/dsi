@@ -46,7 +46,7 @@ class CRUD_Quarto extends CI_Controller {
 
 		if ($this->form_validation->run() == TRUE):
 			$dados = elements(array('limite'), $this->input->post());
-			$this->Quarto_model->update_quartos($dados, array('id' => $this->input->post('id_quarto')));
+			$this->Quarto_model->update_quartos($dados, $this->input->post('id_quarto'));
 		endif;
 
 		$dados = array(

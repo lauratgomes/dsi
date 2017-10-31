@@ -32,8 +32,8 @@ class Medico_model extends CI_Model{
 	// UPDATE
 	public function update_medicos($dados = NULL, $cpf = NULL) {
 		if ($dados != NULL && $cpf != NULL):
-			$this->db->update('medicos', $dados);
 			$this->db->where('cpf', $cpf);
+			$this->db->update('medicos', $dados);
 			redirect('CRUD_Medico/retrieve_medicos');
 		endif;
 	}

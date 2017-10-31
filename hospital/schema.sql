@@ -2190,4 +2190,3 @@ INSERT INTO medicamentos (nome) VALUES ('Sulfato Ferroso');
 INSERT INTO medicamentos (nome) VALUES ('Tiabendazol');
 INSERT INTO medicamentos (nome) VALUES ('Valproato de Sódio');
 INSERT INTO medicamentos (nome) VALUES ('Verapamila');
-
