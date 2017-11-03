@@ -3,7 +3,7 @@
 		echo "<br />";
         echo "<div class='container-fluid'>";
             echo "<div class='row align-items-center justify-content-center'>";
-                echo "<div class='col-lg-10'>";
+                echo "<div class='col-lg-11'>";
                     echo "<div class='card'>";
                         echo "<div class='card-header card-title'>";
                             echo "<div class='text-center'>";
@@ -20,11 +20,27 @@
 						);
 						$this->table->set_template($template);
 
-						$this->table->set_heading('CPF do paciente','CPF do médico', 'CID', 'Remédio', 'Quarto', 'Data e Hora de entrada', '');
 
 						foreach ($tratamentos as $linha):
-							$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->remedio, $linha->quarto, $linha->data_hora_entrada,
-								anchor("CRUD_Tratamento/update_tratamentos/$linha->id", 'Editar'));
+							$this->table->set_heading('CPF do paciente','CPF do médico', 'CID', 'Remédio', 'Quarto', 'Data e Hora de entrada', 'Data e Hora de saída', 'Saída', '', '');
+						
+							if ($linha->data_hora_saida == NULL && $linha->saida == NULL) {
+								$linha->data_hora_saida = "-";
+								$linha->saida = "-";
+								$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->remedio, $linha->quarto, $linha->data_hora_entrada, $linha->data_hora_saida, $linha->saida, 
+									anchor("CRUD_Tratamento/update_tratamentos/$linha->id", "<img height='25px' width='25px' src='../imagens/lapis.png'>"), 
+									anchor("CRUD_Tratamento/delete_tratamentos/$linha->id", "<img height='25px' width='25px' src='../imagens/lixeira.png'>"));
+							} else {
+								if ($linha->saida == 'alta') {
+									$linha->saida = 'Alta médica';
+								} else {
+									$linha->saida = 'Óbito';
+								}
+
+								$this->table->set_heading('CPF do paciente','CPF do médico', 'CID', 'Remédio', 'Quarto', 'Data e Hora de entrada', 'Data e Hora de saída', 'Saída', '', '');
+								$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->remedio, $linha->quarto, $linha->data_hora_entrada, $linha->data_hora_saida, $linha->saida, '', '');
+							}
+
 						endforeach;
 
 						echo $this->table->generate();

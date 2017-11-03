@@ -15,8 +15,8 @@
 							echo "</ul>";
 							echo form_open('CRUD_Usuario/pesquisa_usuarios');
 								echo "<div class='form-row'>";
-							        echo form_input(array('name'=>'login', 'placeholder'=>'Login'), set_value('login'), array('class'=>'form-control col-lg-8'));
-							        echo form_submit(array('name'=>'cadastrar'), 'Pesquisar');
+							        echo form_input(array('name'=>'log', 'placeholder'=>'Login'), set_value('log'), array('class'=>'form-control col-lg-8'));
+							        echo form_submit(array('name'=>'cadastrar'), 'Pesquisar', array('class' => 'btn btn-secondary'));
 							    echo "</div>";
 					        echo form_close();
 						echo "</nav>";
@@ -26,25 +26,32 @@
 								echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
 							endif;
 
-							$template = array(
-								    'table_open' => '<table class="table table-striped text-center">'
-								);
-							$this->table->set_template($template);
+							if ($usuarios == NULL) {
+								echo "<br/>
+									  <div class='alert alert-info' role='alert'>
+										<strong>Desculpe!</strong> Não há registros para a sua busca.
+									  </div>";
+							} else {
+								$template = array(
+									    'table_open' => '<table class="table table-striped text-center">'
+									);
+								$this->table->set_template($template);
 
-							$this->table->set_heading('ID', 'Nome', 'Login', 'Administrador', '', '');
-							foreach ($usuarios as $linha):
-								if ($linha->admin == 't') {
-									$linha->admin = "Sim";
-									$this->table->add_row($linha->id, $linha->nome, $linha->login, $linha->admin);
-								} else {
-									$linha->admin = "Não";
-									$this->table->add_row($linha->id, $linha->nome, $linha->login, $linha->admin, 
-									anchor("CRUD_Usuario/update_usuarios/$linha->id", 'Editar'),  
-									anchor("CRUD_Usuario/delete_usuarios/$linha->id", 'Excluir'));
-								}
-							endforeach;
-							
-							echo $this->table->generate();
+								$this->table->set_heading('ID', 'Nome', 'Login', 'Administrador', '', '');
+								foreach ($usuarios as $linha):
+									if ($linha->admin == 't') {
+										$linha->admin = "Sim";
+										$this->table->add_row($linha->id, $linha->nome, $linha->login, $linha->admin, '', '');
+									} else {
+										$linha->admin = "Não";
+										$this->table->add_row($linha->id, $linha->nome, $linha->login, $linha->admin, 
+										anchor("CRUD_Usuario/update_usuarios/$linha->id", "<img height='25px' width='25px' src='../imagens/lapis.png'>"),  
+										anchor("CRUD_Usuario/delete_usuarios/$linha->id", "<img height='25px' width='25px' src='../imagens/lixeira.png'>"));
+									}
+								endforeach;
+								
+								echo $this->table->generate();
+							}
 						echo "</div>";
 					echo "</div>";
 				echo "</div>";

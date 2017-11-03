@@ -56,3 +56,12 @@ body {
 	background-color: #c0c0c0;
 	color: #474747;
 }
+
+.create_medico {
+	background-image: url(../imagens/medico.png);
+}
+
+
+#create_medicamento {
+	background-image: url(../imagens/remedio.png);
+}

@@ -19,7 +19,7 @@
 							endif;
 
 							foreach ($quartos as $linha):
-								if ($linha->vago = 't') {
+								if ($linha->vago == 't') {
 									$linha->vago = 'Vago';
 								} else {
 									$linha->vago = 'Ocupado';
@@ -33,7 +33,9 @@
 											echo "<p class='card-text text-justify'> Limite de pacientes: " . $linha->limite . "</p>";
 											echo "<div class='text-right'>";
 												echo anchor("CRUD_Quarto/update_quartos/$linha->id", "<img height='25px' width='25px' src='../imagens/lapis.png'>");
-												echo anchor("CRUD_Quarto/delete_quartos/$linha->id", "<img height='25px' width='25px' src='../imagens/lixeira.png'>");
+												if ($linha->vago == 'Vago') {
+													echo anchor("CRUD_Quarto/delete_quartos/$linha->id", "<img height='25px' width='25px' src='../imagens/lixeira.png'>");
+												}
 											echo "</div>";
 										echo "</div>";
 									echo "</div>";

@@ -26,7 +26,7 @@ class CRUD_Doenca extends CI_Controller {
 	}
 
 	public function pesquisa_doencas() {
-		$codigo = $this->input->post('codigo');
+		$codigo = strtoupper($this->input->post('codigo'));
 		$descricao = $this->input->post('descricao');
 
 		$dados = array(

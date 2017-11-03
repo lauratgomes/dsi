@@ -14,9 +14,9 @@ class CRUD_Tratamento extends CI_Controller {
 		$this->load->library('table');
 		$this->load->library('upload');
 		$this->load->model('Tratamento_model');
-		$this->load->model('Registro_model');
 		$this->load->model('Paciente_model');
 		$this->load->model('Quarto_model');
+		$this->load->model('Medico_model');
 	}
 	
 	// CRUD TRATAMENTOS (C - ; R - OK; U - ; D - ;)
@@ -28,19 +28,16 @@ class CRUD_Tratamento extends CI_Controller {
 		$this->form_validation->set_rules('data_hora_entrada', 'DATA_HORA_ENTRADA', 'required');
 
 		if ($this->form_validation->run() == TRUE):
-			$dados = elements(array('cpf_paciente', 'cpf_medico', 'cid', 'data_hora_entrada', 'quarto'), $this->input->post());
-			$id_registro = $this->Registro_model->insert_registros($dados);
-			if ($id_registro != NULL) {
-				$registro = array('id_registro'=>$id_registro,'remedio'=>$this->input->post('remedio'));
-				
-				$vetor = elements(array('id_registro', 'remedio'), $registro);
-				$this->Tratamento_model->insert_tratamentos($vetor);
-			}
+			$dados = elements(array('cpf_paciente', 'cpf_medico', 'cid', 'remedio', 'quarto', 'data_hora_entrada'), $this->input->post());
+
+			$this->Tratamento_model->insert_tratamentos($dados);
 		endif;
 
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Create',
 			'tela' => 'create_tratamentos',
+			'pacientes' => $this->Paciente_model->selectAll_pacientes()->result(),
+			'medicos' => $this->Medico_model->selectAll_medicos()->result(),
 			'quartos' => $this->Quarto_model->selectAll_quartos()->result(),
 		);
 		$this->load->view('crud', $dados);
@@ -63,34 +60,42 @@ class CRUD_Tratamento extends CI_Controller {
 		$this->form_validation->set_rules('remedio', 'REMEDIO', 'required');
 
 		if ($this->form_validation->run() == TRUE):
-			$remedio =  elements(array('remedio'), $this->input->post());
-			$id_registro = $this->Tratamento_model->update_tratamentos($remedio, $this->input->post('id_tratamento'));
-		
-			$dados = array('cpf_medico'=>$this->input->post('cpf_medico'), 'cid'=>$this->input->post('cid'), 'quarto'=>$this->input->post('quarto'));
-			$this->Registro_model->update_registros($dados, $id_registro);
+			$dados =  elements(array('cpf_medico', 'cid', 'remedio'), $this->input->post());
+			$this->Tratamento_model->update_tratamentos($dados, $this->input->post('id_tratamento'));
 		endif;
 
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Update',
 			'tela' => 'update_tratamentos',
+			'medicos' => $this->Medico_model->selectAll_medicos()->result(),
 			'quartos' => $this->Quarto_model->selectAll_quartos()->result(),
 		);
 		$this->load->view('crud', $dados);
 	}
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public function delete_tratamentos() {
 		$id_tratamento = $this->input->post('id_tratamento');
-		$dados = elements(array('data_hora_saida', 'saida'), $this->input->post());
+		$dados_saida = elements(array('data_hora_saida', 'saida'), $this->input->post());
 
 		if ($id_tratamento > 0):
-			$this->Tratamento_model->delete_tratamentos(array('id' => $id_tratamento));
+			if ($this->Tratamento_model->registra_saidas($dados_saida, $id_tratamento)) {
+				if ($this->input->post('saida') == 'morte') {
+					$dados_tratamento = $this->Tratamento_model->select_tratamentos($id_tratamento);
+					$cpf_paciente = $this->Paciente_model->gera_certidao_obito($dados_tratamento);
+					$this->Tratamento_model->delete_tratamentos(array('cpf_paciente' => $cpf_paciente));
+					$this->Paciente_model->delete_pacientes(array('cpf' => $cpf_paciente));
+				}
+			}
 		endif;
 		
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Delete',
 			'tela' => 'delete_tratamentos',
+			'medicos' => $this->Medico_model->selectAll_medicos()->result(),
+			'quartos' => $this->Quarto_model->selectAll_quartos()->result(),
 		);
 		$this->load->view('crud', $dados);
 	}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

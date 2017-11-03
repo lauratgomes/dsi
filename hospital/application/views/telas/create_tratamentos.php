@@ -20,11 +20,19 @@
                                 echo "<div class='form-row'>";
                                     echo "<div class='form-group col-md-6'>";
                                         echo form_label('CPF do paciente: ');
-                                        echo form_input(array('name'=>'cpf_paciente'), set_value('cpf_paciente'), array('class' => 'form-control'));
+                                        echo "<select class='form-control' name='cpf_paciente'>";
+                                                foreach ($pacientes as $linha) {
+                                                    echo "<option value=$linha->cpf> $linha->cpf - $linha->nome </option>";
+                                                }
+                                            echo "</select>";
                                     echo "</div>";
                                     echo "<div class='form-group col-md-6'>";
                                         echo form_label('CPF do médico: ');
-                                        echo form_input(array('name'=>'cpf_medico'), set_value('cpf_medico'), array('class' => 'form-control'));
+                                        echo "<select class='form-control' name='cpf_medico'>";
+                                                foreach ($medicos as $linha) {
+                                                    echo "<option value=$linha->cpf> $linha->cpf - $linha->nome </option>";
+                                                }
+                                            echo "</select>";
                                     echo "</div>";
                                 echo "</div>";
                                 echo "<div class='form-row'>";

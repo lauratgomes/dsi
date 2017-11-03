@@ -85,7 +85,7 @@ class CRUD_Usuario extends CI_Controller {
 	}
 
 	public function pesquisa_usuarios() {
-		$login = $this->input->post('login');
+		$login = $this->input->post('log');
 
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Retrieve',

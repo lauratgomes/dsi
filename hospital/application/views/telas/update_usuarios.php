@@ -25,7 +25,7 @@
 
 								echo "<div class='form-group'>";
                                     echo form_label('Nome: ');
-                                    echo form_input(array('name'=>'nome', 'disabled'=>'disabled'), set_value('nome', $query->nome), array('class' => 'form-control'));
+                                    echo form_input(array('name'=>'nome'), set_value('nome', $query->nome), array('class' => 'form-control'));
                                 echo "</div>";
                                 echo "<div class='form-group'>";
                                     echo form_label('Login: ');
@@ -33,7 +33,7 @@
                                 echo "</div>";
                                 echo "<div class='form-group'>";
                                     echo form_label('Senha: ');
-                                    echo form_password(array('name'=>'senha', 'disabled'=>'disabled'), set_value('senha', $query->senha), array('class' => 'form-control'));
+                                    echo form_password(array('name'=>'senha'), set_value('senha', $query->senha), array('class' => 'form-control'));
                                 echo "</div>";
                                 echo "<div class='form-group'>";
                                     echo form_label('Esse usuário será um administrador? ');

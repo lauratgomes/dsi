@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-custom" style="background-color: #61aceb; color: #fff;">
+    <img width="40px" height="40px" src="../imagens/hospital.png">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
@@ -15,7 +16,6 @@
                     <?php echo anchor('CRUD_Medicamento/retrieve_medicamentos','Medicamentos', array('class'=>'dropdown-item a_dropdown')); ?> 
                     <?php echo anchor('CRUD_Medico/retrieve_medicos','Médicos', array('class'=>'dropdown-item a_dropdown')); ?> 
                     <?php echo anchor('CRUD_Paciente/retrieve_pacientes','Pacientes', array('class'=>'dropdown-item a_dropdown')); ?> 
-                    <?php echo anchor('CRUD_Registro/retrieve_registros','Registros', array('class'=>'dropdown-item a_dropdown')); ?> 
                     <?php echo anchor('CRUD_Tratamento/retrieve_tratamentos','Tratamentos', array('class'=>'dropdown-item a_dropdown')); ?> 
                 </div>
             </li>
@@ -23,5 +23,5 @@
                 <?php echo anchor('CRUD_Usuario/logout', 'Logout', array('class'=>'nav-link')); ?> 
             </li>
         </ul>
-    </div>]
+    </div>
 </nav>

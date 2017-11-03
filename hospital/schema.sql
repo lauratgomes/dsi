@@ -48,22 +48,16 @@ CREATE TABLE medicamentos (
 	nome	VARCHAR(50)
 );
 
-
-CREATE TABLE registros (
+CREATE TABLE tratamentos (
 	id 					SERIAL 			PRIMARY KEY,
 	cpf_paciente		CHAR(11)		REFERENCES pacientes(cpf),
 	cpf_medico			CHAR(11)		REFERENCES medicos(cpf),
 	cid 				CHAR(4)			REFERENCES doencas(codigo),
+	remedio				INTEGER			REFERENCES medicamentos(id)
 	quarto 				INTEGER			REFERENCES quartos(id),
 	data_hora_entrada 	TIMESTAMP,
 	data_hora_saida		TIMESTAMP,
 	saida 				VARCHAR(5)
-);
-
-CREATE TABLE tratamentos (
-	id 				SERIAL 		PRIMARY KEY,
-	id_registro		INTEGER					REFERENCES registros(id),
-	remedio			INTEGER					REFERENCES medicamentos(id)
 );	
 
 # Tratamentos + Registros -> registro

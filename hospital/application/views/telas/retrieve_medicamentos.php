@@ -16,7 +16,7 @@
 							echo form_open('CRUD_Medicamento/pesquisa_medicamentos');
 								echo "<div class='form-row'>";
 									echo form_input(array('name'=>'nome', 'placeholder'=>'Nome'), set_value('nome'), array('class'=>'form-control col-lg-8'));
-						        	echo form_submit(array('name'=>'cadastrar'), 'Pesquisar');
+						        	echo form_submit(array('name'=>'cadastrar'), 'Pesquisar', array('class' => 'btn btn-secondary'));
 						        echo "</div>";
 					        echo form_close();
        					echo "</nav>";
@@ -26,29 +26,36 @@
 								echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
 							endif;
 
-							$template = array(
-							    'table_open' => '<table class="table table-striped text-center">'
-							);
-							$this->table->set_template($template);
-
-							if ($this->session->userdata('admin') == true) {
-								$this->table->set_heading('ID', 'Nome', '', '');
-
-								foreach ($medicamentos as $linha):
-									$this->table->add_row($linha->id, $linha->nome, 
-										anchor("CRUD_Medicamento/update_medicamentos/$linha->id", 'Editar'),  
-										anchor("CRUD_Medicamento/delete_medicamentos/$linha->id", 'Excluir'));
-								endforeach;
-
+							if ($medicamentos == NULL) {
+								echo "<br/>
+									  <div class='alert alert-info' role='alert'>
+										<strong>Desculpe!</strong> Não há registros para a sua busca.
+									  </div>";
 							} else {
-								$this->table->set_heading('ID', 'Nome');
+								$template = array(
+								    'table_open' => '<table class="table table-striped text-center">'
+								);
+								$this->table->set_template($template);
 
-								foreach ($medicamentos as $linha):
-									$this->table->add_row($linha->id, $linha->nome); 
-								endforeach;
+								if ($this->session->userdata('admin') == true) {
+									$this->table->set_heading('ID', 'Nome', '', '');
+
+									foreach ($medicamentos as $linha):
+										$this->table->add_row($linha->id, $linha->nome, 
+											anchor("CRUD_Medicamento/update_medicamentos/$linha->id", "<img height='25px' width='25px' src='../imagens/lapis.png'>"),  
+											anchor("CRUD_Medicamento/delete_medicamentos/$linha->id", "<img height='25px' width='25px' src='../imagens/lixeira.png'>"));
+									endforeach;
+
+								} else {
+									$this->table->set_heading('ID', 'Nome', '', '');
+
+									foreach ($medicamentos as $linha):
+										$this->table->add_row($linha->id, $linha->nome, '', ''); 
+									endforeach;
+								}
+
+								echo $this->table->generate();
 							}
-							
-							echo $this->table->generate();
 						echo "</div>";
 					echo "</div>";
 				echo "</div>";

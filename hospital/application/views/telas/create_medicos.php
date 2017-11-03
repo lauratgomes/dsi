@@ -10,7 +10,7 @@
 								echo "<h5>Cadastro de Médicos</h5>";
 							echo "</div>";
 						echo "</div>";
-						echo "<div class='card-body'>";
+						echo "<div class='card-body'";
 							echo form_open('CRUD_Medico/create_medicos');
 
 								if ($this->session->flashdata('cadastrook')):

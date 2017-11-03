@@ -17,7 +17,7 @@
 									echo "<div class='form-row'>";
 								        echo form_input(array('name'=>'codigo', 'placeholder'=>'Código'), set_value('codigo'), array('class'=>'form-control col-lg-3'));
 								        echo form_input(array('name'=>'descricao', 'placeholder'=>'Descrição'), set_value('descricao'), array('class'=>'form-control col-lg-6'));
-								        echo form_submit(array('name'=>'cadastrar'), 'Pesquisar');
+								        echo form_submit(array('name'=>'cadastrar'), 'Pesquisar', array('class' => 'btn btn-secondary'));
 							        echo "</div>";
 						        echo form_close();
 						echo "</nav>";
@@ -27,18 +27,23 @@
 								echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
 							endif;
 
-
-							$template = array(
-							    'table_open' => '<table class="table table-striped text-center">'
-							);
-							$this->table->set_template($template);
-							
-							$this->table->set_heading('CID', 'Descrição');
-							foreach ($doencas as $linha):
-								$this->table->add_row($linha->codigo, $linha->descricao);
-							endforeach;
-							echo $this->table->generate();
-
+							if ($doencas == NULL) {
+								echo "<br/>
+									  <div class='alert alert-info' role='alert'>
+										<strong>Desculpe!</strong> Não há registros para a sua busca.
+									  </div>";
+							} else {
+								$template = array(
+								    'table_open' => '<table class="table table-striped text-center">'
+								);
+								$this->table->set_template($template);
+								
+								$this->table->set_heading('CID', 'Descrição');
+								foreach ($doencas as $linha):
+									$this->table->add_row($linha->codigo, $linha->descricao);
+								endforeach;
+								echo $this->table->generate();
+							}
 						echo "</div>";
 					echo "</div>";
 				echo "</div>";

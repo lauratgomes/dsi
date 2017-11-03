@@ -18,12 +18,12 @@ class CRUD_Medicamento extends CI_Controller {
 	
 	// CRUD MEDICAMENTOS (C - ; R - ; U - ; D - )
 	public function create_medicamentos() {
-		$this->form_validation->set_rules('nome', 'NOME', 'trim|required|max_length[50]');
+		$this->form_validation->set_rules('nome', 'NOME', 'trim|required');
 
-		if ($this->form_validation->run() == TRUE):
+		if ($this->form_validation->run() == TRUE) {
 			$dados = elements(array('nome'), $this->input->post());
 			$this->Medicamento_model->insert_medicamentos($dados);
-		endif;
+		}
 
 		$dados = array(
 			'titulo' => 'CRUD &raquo; Create',

@@ -21,7 +21,6 @@
                     <?php echo anchor('CRUD_Medico/retrieve_medicos','Médicos', array('class'=>'dropdown-item a_dropdown')); ?> 
                     <?php echo anchor('CRUD_Paciente/retrieve_pacientes','Pacientes', array('class'=>'dropdown-item a_dropdown')); ?> 
                     <?php echo anchor('CRUD_Quarto/retrieve_quartos','Quartos', array('class'=>'dropdown-item a_dropdown')); ?> 
-                    <?php echo anchor('CRUD_Registro/retrieve_registros','Registros', array('class'=>'dropdown-item a_dropdown')); ?> 
                     <?php echo anchor('CRUD_Tratamento/retrieve_tratamentos','Tratamentos', array('class'=>'dropdown-item a_dropdown')); ?> 
                     <?php echo anchor('CRUD_Usuario/retrieve_usuarios','Usuários', array('class'=>'dropdown-item a_dropdown')); ?> 
                 </div>

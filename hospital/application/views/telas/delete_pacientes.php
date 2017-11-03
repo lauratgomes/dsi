@@ -51,20 +51,7 @@
 										echo form_label('Complemento: ');
 										echo form_input(array('name'=>'complemento', 'disabled'=>'disabled'), set_value('complemento', $query->complemento), array('class' => 'form-control'));
 									echo "</div>";
-								echo "</div>";
-								echo "<div class='form-row'>";
-									echo "<div class='form-group col-md-6'>";
-										echo form_label('A saída é por qual motivo? ');
-										echo "<select name='saida' class='form-control'>
-								                <option value='alta'> Alta médica </option>
-								                <option value='morte'> Óbito </option>
-								              </select>";
-								    echo "</div> <br />";
-									echo "<div class='form-group col-md-6'>";
-								        echo form_label('Data e hora da saída: ');
-							        	echo form_input(array('name'=>'data_hora_saida', 'type'=>'datetime-local', 'class'=>'form-control', set_value('data_hora_saida')));
-							        echo "</div>";
-							    echo "</div>";
+								echo "</div> <br />";
 								echo "<div class='text-center'>";
 							    	echo form_submit(array('name'=>'cadastrar'), 'Excluir', array('class' => 'btn btn-secondary btn-block'));
 							    echo "</div>";
