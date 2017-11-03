@@ -1,5 +1,4 @@
-<br>
-<br>
-<div class='micro_div center center_align'>
-	<p class='error'>Você não tem permissão para acessar essa área.</p>
+<br />
+<div class="alert alert-danger" role="alert">
+  <strong>Sinto muito!</strong> Você não tem permissão para acessar essa área.
 </div>

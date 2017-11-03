@@ -6,36 +6,57 @@
 
         $query = $this->Registro_model->select_registros($id_tratamento)->row();
 
-    	echo "<h2> Edição de Tratamento </h2>";
+    	echo "<br />";
+        echo "<div class='container-fluid'>";
+            echo "<div class='row align-items-center justify-content-center'>";
+                echo "<div class='col-lg-8'>";
+                    echo "<div class='card'>";
+                        echo "<div class='card-header card-title'>";
+                            echo "<div class='text-center'>";
+                                echo "<h5>Edição de Tratamento</h5>";
+                            echo "</div>";
+                        echo "</div>";
+                        echo "<div class='card-body'>";
+                        	echo form_open("CRUD_Tratamento/update_tratamentos/$id_tratamento");
 
-    	echo form_open("CRUD_Tratamento/update_tratamentos/$id_tratamento");
+                            	if ($this->session->flashdata('edicaook')):
+                        			echo '<p>' . $this->session->flashdata('edicaook') . '</p>';
+                        		endif;
 
-    	if ($this->session->flashdata('edicaook')):
-			echo '<p>' . $this->session->flashdata('edicaook') . '</p>';
-		endif;
-
-        echo form_label('CPF do médico: ');
-        echo form_input(array('name'=>'cpf_medico'), set_value('cpf_medico', $query->cpf_medico), 'autofocus');
-        echo "<br />";
-        echo form_label('CID: ');
-        echo form_input(array('name'=>'cid'), set_value('cid', $query->cid));
-        echo "<br />";
-        echo "Caso você não saiba o CID, descubra clicando " . anchor("CRUD_Doenca/retrieve_doencas", 'aqui', ['target' => '_blank']);  
-        echo "<br />";
-        echo form_label('Remédio: ');
-        echo form_input(array('name'=>'remedio'), set_value('remedio', $query->remedio));
-        echo "Caso você não saiba o código do remédio, descubra clicando " . anchor("CRUD_Medicamento/retrieve_medicamentos", 'aqui', ['target' => '_blank']);  
-        echo "<br />";
-        echo form_label('Escolha um quarto: ');
-        echo "<select name='quarto'>";
-               foreach ($quartos as $linha) {
-                   echo "<option value=$linha->id> $linha->id </option>";
-               }
-        echo "</select>";
-        echo "<br />";
-        echo form_submit(array('name'=>'cadastrar'), 'Cadastrar');
-        echo form_hidden('id_tratamento', $query->id);
-		echo form_close();
+                                echo "<div class='form-group'>";
+                                    echo form_label('CPF do médico: ');
+                                    echo form_input(array('name'=>'cpf_medico'), set_value('cpf_medico', $query->cpf_medico), array('class' => 'form-control'));
+                                echo "</div>";
+                                echo "<div class='form-row'>";
+                                    echo "<div class='form-group col-md-6'>";
+                                        echo form_label('CID: ');
+                                        echo form_input(array('name'=>'cid'), set_value('cid', $query->cid), array('class' => 'form-control'));
+                                        echo "<small class='form-text text-muted'>" . anchor("CRUD_Doenca/retrieve_doencas", 'Não sabe o CID? Clique aqui.', ['target' => '_blank']) . "</small>";
+                                    echo "</div>";
+                                    echo "<div class='form-group col-md-6'>";
+                                        echo form_label('Remédio: ');
+                                        echo form_input(array('name'=>'remedio'), set_value('remedio', $query->remedio), array('class' => 'form-control'));
+                                        echo "<small class='form-text text-muted'>" . anchor("CRUD_Medicamento/retrieve_medicamentos", 'Não sabe qual remédio cadastrar? Clique aqui.', ['target' => '_blank']) . "</small>";
+                                    echo "</div>";
+                                echo "</div>";
+                                echo "<div class='form-group'>";
+                                    echo form_label('Escolha um quarto: ');
+                                    echo "<select class='form-control' name='quarto'>";
+                                        foreach ($quartos as $linha) {
+                                            echo "<option value=$linha->id> $linha->id </option>";
+                                        }
+                                    echo "</select>";
+                                echo "</div> <br />";
+                                echo "<div class='text-center'>";
+                                    echo form_submit(array('name'=>'cadastrar'), 'Enviar', array('class' => 'btn btn-secondary btn-block'));
+                                echo "</div>";
+                                echo form_hidden('id_tratamento', $query->id);
+		                    echo form_close();
+                        echo "</div>";
+                    echo "</div>";
+                echo "</div>";
+            echo "</div>";
+        echo "</div>";
     } else {
       include "erro.php";
     }

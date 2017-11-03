@@ -52,6 +52,8 @@ class Medicamento_model extends CI_Model{
 			$this->db->like('nome', $nome, 'both');
 			$this->db->order_by('id');
 			return $this->db->get('medicamentos');
-		} 
+		} else {
+			redirect('CRUD_Medicamento/retrieve_medicamentos');
+		}
 	}
 }

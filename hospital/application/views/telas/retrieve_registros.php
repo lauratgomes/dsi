@@ -1,33 +1,39 @@
 <?php
     if ($this->session->userdata('logado') == true) {
-		echo "<br>";
-		echo "<div class='container-fluid'>";
-		echo 	"<div class='row align-items-center justify-content-center'>";
-		echo 		"<div class='col-md-11'>";
-		echo 			"<div class='card'>";
-		echo 				"<div class='card-header card-title'>";
-		echo 					"<h4 class='text-center'>Registros</h4>";
-		echo 				"</div>";
+		echo "<br />";
+        echo "<div class='container-fluid'>";
+            echo "<div class='row align-items-center justify-content-center'>";
+                echo "<div class='col-lg-10'>";
+                    echo "<div class='card'>";
+                        echo "<div class='card-header card-title'>";
+                            echo "<div class='text-center'>";
+                                echo "<h5>Registros</h5>";
+                            echo "</div>";
+                        echo "</div>";
 
-		if ($this->session->flashdata('exclusaook')):
-			echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
-		endif;
+						if ($this->session->flashdata('exclusaook')):
+							echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
+						endif;
 
-		$this->table->set_heading('CPF do paciente','CPF do médico', 'CID', 'Quarto', 'Remédio', 'Data e Hora de entrada', 'Data e Hora de saída', 'Saída');
-		foreach ($registros as $linha):
-			if ($linha->data_hora_saida == NULL && $linha->saida == NULL) {
-				$linha->data_hora_saida = "-";
-				$linha->saida = "-";
-			}
+						$template = array(
+						    'table_open' => '<table class="table table-striped text-center">'
+						);
+						$this->table->set_template($template);
 
-			$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->quarto, $linha->remedio, $linha->data_hora_entrada, $linha->data_hora_saida, $linha->saida);
-		endforeach;
-		echo $this->table->generate();
-		echo 			"</div>";
-		echo 		"</div>";
-		echo 				"</div>";
-		echo 			"</div>";
-		echo 		"</div>";
+						$this->table->set_heading('CPF do paciente','CPF do médico', 'CID', 'Quarto', 'Remédio', 'Data e Hora de entrada', 'Data e Hora de saída', 'Saída');
+						foreach ($registros as $linha):
+							if ($linha->data_hora_saida == NULL && $linha->saida == NULL) {
+								$linha->data_hora_saida = "-";
+								$linha->saida = "-";
+							}
+
+							$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->quarto, $linha->remedio, $linha->data_hora_entrada, $linha->data_hora_saida, $linha->saida);
+						endforeach;
+
+						echo $this->table->generate();
+					echo "</div>";
+				echo "</div>";
+			echo "</div>";
 		echo "</div>";
 	} else {
 		include "erro.php";

@@ -54,6 +54,8 @@ class Medico_model extends CI_Model{
 			$this->db->like('nome', $nome, 'both');
 			$this->db->order_by('cpf');
 			return $this->db->get('medicos');
-		} 
+		} else {
+			redirect('CRUD_Medico/retrieve_medicos');
+		}
 	}
 }

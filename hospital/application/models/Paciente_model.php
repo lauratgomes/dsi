@@ -52,6 +52,8 @@ class Paciente_model extends CI_Model{
 			$this->db->like('nome', $nome, 'both');
 			$this->db->order_by('cpf');
 			return $this->db->get('pacientes');
-		} 
+		} else {
+			redirect('CRUD_Paciente/retrieve_pacientes');
+		}
 	}
 }

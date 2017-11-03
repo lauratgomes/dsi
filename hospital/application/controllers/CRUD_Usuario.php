@@ -84,6 +84,17 @@ class CRUD_Usuario extends CI_Controller {
 		$this->load->view('crud', $dados);
 	}
 
+	public function pesquisa_usuarios() {
+		$login = $this->input->post('login');
+
+		$dados = array(
+			'titulo' => 'CRUD &raquo; Retrieve',
+			'tela' => 'retrieve_usuarios',
+			'usuarios' => $this->Usuario_model->search_usuarios($login)->result(),
+		);
+		$this->load->view('crud', $dados);
+	}
+
 	public function user_login_process() {
 		$usuario = $this->input->post('login');
 		$senha = $this->input->post('senha');

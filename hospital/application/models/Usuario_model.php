@@ -46,6 +46,16 @@ class Usuario_model extends CI_Model{
 		endif;
 	}
 
+	public function search_usuarios($login = NULL) {
+		if ($login != NULL) {
+			$this->db->like('login', $login, 'both');
+			$this->db->order_by('id');
+			return $this->db->get('usuarios');
+		} else {
+			redirect('CRUD_Usuario/retrieve_usuarios');
+		}
+	}
+
 	public function session_login($dados = NULL) {	
 		if ($dados != NULL) {
 			if ($dados['login'] == 'admin') {
