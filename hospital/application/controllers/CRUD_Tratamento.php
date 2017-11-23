@@ -73,7 +73,7 @@ class CRUD_Tratamento extends CI_Controller {
 		$this->load->view('crud', $dados);
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public function delete_tratamentos() {
 		$id_tratamento = $this->input->post('id_tratamento');
 		$dados_saida = elements(array('data_hora_saida', 'saida'), $this->input->post());
@@ -81,10 +81,10 @@ class CRUD_Tratamento extends CI_Controller {
 		if ($id_tratamento > 0):
 			if ($this->Tratamento_model->registra_saidas($dados_saida, $id_tratamento)) {
 				if ($this->input->post('saida') == 'morte') {
-					$dados_tratamento = $this->Tratamento_model->select_tratamentos($id_tratamento);
+					$dados_tratamento = $this->Tratamento_model->select_tratamentos($id_tratamento)->result();
 					$cpf_paciente = $this->Paciente_model->gera_certidao_obito($dados_tratamento);
-					$this->Tratamento_model->delete_tratamentos(array('cpf_paciente' => $cpf_paciente));
-					$this->Paciente_model->delete_pacientes(array('cpf' => $cpf_paciente));
+					//$this->Tratamento_model->delete_tratamentos($cpf_paciente);
+					//$this->Paciente_model->delete_pacientes(array('cpf' => $cpf_paciente));
 				}
 			}
 		endif;
@@ -97,5 +97,4 @@ class CRUD_Tratamento extends CI_Controller {
 		);
 		$this->load->view('crud', $dados);
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

@@ -60,9 +60,6 @@ CREATE TABLE tratamentos (
 	saida 				VARCHAR(5)
 );	
 
-# Tratamentos + Registros -> registro
-# Tratamento -> id, cod_registro, remedio
-
 INSERT INTO doencas (codigo, descricao) VALUES ('A00', 'Cólera');
 INSERT INTO doencas (codigo, descricao) VALUES ('A01', 'Febres tifóide e paratifóide');
 INSERT INTO doencas (codigo, descricao) VALUES ('A02', 'Outras infecções por Salmonella');

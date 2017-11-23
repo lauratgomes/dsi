@@ -16,10 +16,8 @@
 		<tr>
 			<td>Olá</td>
 			<td>Olá</td>
-			<td>Olá</td>
 		</tr>
 		<tr>
-			<td>Naruto</td>
 			<td>Sakura</td>
 			<td>Sasuke</td>
 		</tr>

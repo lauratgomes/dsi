@@ -37,13 +37,12 @@
 									);
 								$this->table->set_template($template);
 
-								$this->table->set_heading('CPF', 'RG', 'Nome', 'Telefone', 'Rua', 'Complemento', '', '');
+								$this->table->set_heading('CPF', 'RG', 'Nome', 'Telefone', 'Rua', 'Complemento', '');
 
 								foreach ($pacientes as $linha):
 									$this->table->add_row($linha->cpf, $linha->rg, $linha->nome, $linha->telefone, $linha->rua, $linha->complemento, 
-										anchor("CRUD_Paciente/update_pacientes/$linha->cpf", "<img height='25px' width='25px' src='../imagens/lapis.png'>"),  
-										anchor("CRUD_Paciente/delete_pacientes/$linha->cpf", "<img height='25px' width='25px' src='../imagens/lixeira.png'>"));
-								endforeach;
+										anchor("CRUD_Paciente/update_pacientes/$linha->cpf", "<img height='25px' width='25px' src='../imagens/lapis.png'>"));
+								endforeach;	
 
 								echo $this->table->generate();
 							}

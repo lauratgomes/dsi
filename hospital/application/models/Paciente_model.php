@@ -40,11 +40,10 @@ class Paciente_model extends CI_Model{
 
 	// DELETE
 	public function delete_pacientes($cpf_paciente = NULL) {
-		if ($cpf_paciente != NULL):
+		if ($cpf_paciente != NULL) {
 			$this->db->delete('pacientes', $cpf_paciente);
-			$this->session->set_flashdata('exclusaook', 'Registro excluído com sucesso!');
 			redirect('CRUD_Paciente/retrieve_pacientes');
-		endif;
+		}
 	}
 
 	public function search_pacientes($nome = NULL) {
@@ -54,6 +53,16 @@ class Paciente_model extends CI_Model{
 			return $this->db->get('pacientes');
 		} else {
 			redirect('CRUD_Paciente/retrieve_pacientes');
+		}
+	}
+
+
+	public function gera_certidao_obito($dados_tratamento = NULL) {
+		if ($dados_tratamento != NULL) {
+			redirect('createpdf/pdf', $dados_tratamento);
+			//return $dados_tratamento[0]->cpf_paciente;
+		} else {
+			return -1;
 		}
 	}
 }

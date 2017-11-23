@@ -54,15 +54,20 @@
 
 		// DELETE
 		public function delete_tratamentos($cpf_paciente = NULL) {
-			if ($cpf_paciente != NULL):
-				$this->db->delete('tratamentos', $cpf_paciente);
-			endif;
+			if ($cpf_paciente != NULL) {
+				$this->db->where('cpf_paciente', $cpf_paciente);
+				$this->db->delete('tratamentos');
+				return true;
+			} else {
+				return -1;
+			}
 		}
 
 		public function registra_saidas($dados_saida = NULL, $id_tratamento) {
 			if ($dados_saida != NULL && $id_tratamento != NULL) {
 				$this->db->where('id', $id_tratamento);			
 				$this->db->update('tratamentos', $dados_saida);
+				return true;
 			} else {
 				return -1;
 			}
