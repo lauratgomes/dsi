@@ -14,7 +14,6 @@ class CRUD_Usuario extends CI_Controller {
 		$this->load->library('table');
 		$this->load->library('upload');
 		$this->load->model('Usuario_model');
-		$this->load->model('Paciente_model');
 	}
 	
 	public function index() {
@@ -114,17 +113,14 @@ class CRUD_Usuario extends CI_Controller {
 				$this->session->set_userdata('login', $result[1]);
 				$this->session->set_userdata('administrador', $result[2]);
 				$this->session->set_userdata('logado', true);
-				
-				if ($usuario == 'admin') {
+			
+				if ($result[2] == 't') {
 					$this->session->set_userdata('admin', true);
 					$this->retrieve_usuarios();
 				} else {
 					$this->session->set_userdata('admin', false);
-					$this->Paciente_model->selectAll_pacientes();
+					redirect('CRUD_Paciente/retrieve_pacientes');
 				}
-			} else {
-				$this->session->set_userdata('logado', false);
-				$this->load->view('login');
 			}
 		} else {
 			$this->load->view('telas/login');

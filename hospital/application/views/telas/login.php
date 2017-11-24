@@ -5,13 +5,13 @@
     <link rel="stylesheet" href="<?php echo base_url('css/style.css') ?>" />
     <link rel="shortcut icon" href="../imagens/favicon.png"/>
 </head>
-<body>
+<body style=" background-color: rgb(94, 135, 152);">
 <?php
 	if ($this->session->userdata('logado') == false) {
 
 		$this->load->view('includes/header');
 
-		echo "<div class='container'>
+		echo "<br /><br /><br /><br /> <div class='container'>
 	        	<div class='card card-container'>
 	            <img id='profile-img' class='profile-img-card' src='//ssl.gstatic.com/accounts/ui/avatar_2x.png' />
 	            <p id='profile-name' class='profile-name-card'></p>";

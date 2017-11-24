@@ -33,7 +33,7 @@
                                 echo "</div>";
                                 echo "<div class='form-group'>";
                                     echo form_label('Senha: ');
-                                    echo form_password(array('name'=>'senha'), set_value('senha', $query->senha), array('class' => 'form-control'));
+                                    echo form_password(array('name'=>'senha'), set_value('senha'), array('class' => 'form-control'));
                                 echo "</div>";
                                 echo "<div class='form-group'>";
                                     echo form_label('Esse usuário será um administrador? ');

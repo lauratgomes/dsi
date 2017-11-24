@@ -9,7 +9,6 @@ CREATE TABLE usuarios (
 INSERT INTO usuarios (nome, login, senha, admin) VALUES ('Administrador', 'admin', '21232f297a57a5a743894a0e4a801fc3', TRUE);
 INSERT INTO usuarios (nome, login, senha, admin) VALUES ('Laura Gomes', 'lolrona', '202cb962ac59075b964b07152d234b70', FALSE);
 
-
 CREATE TABLE medicos (
 	cpf				CHAR(11)	PRIMARY KEY,
 	crm_coren		VARCHAR(10),
@@ -20,14 +19,12 @@ CREATE TABLE medicos (
 	complemento		VARCHAR(20)
 );
 
-
 CREATE TABLE quartos (
 	id				SERIAL 		PRIMARY KEY,
 	limite			INTEGER,
 	vago			BOOLEAN		DEFAULT TRUE,
 	n_pacientes		INTEGER		DEFAULT 0
 );
-
 
 CREATE TABLE pacientes (
 	cpf				CHAR(11) 	PRIMARY KEY,
@@ -37,7 +34,6 @@ CREATE TABLE pacientes (
 	rua				VARCHAR(50),
 	complemento		VARCHAR(20)
 );
-
 
 CREATE TABLE doencas (
 	codigo		CHAR(4)		PRIMARY KEY,
