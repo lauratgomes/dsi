@@ -15,35 +15,41 @@
 							echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
 						endif;
 
-						$template = array(
-						    'table_open' => '<table class="table table-striped text-center">'
-						);
-						$this->table->set_template($template);
 
-
-						foreach ($tratamentos as $linha):
-							$this->table->set_heading('CPF do paciente','CPF do médico', 'CID', 'Remédio', 'Quarto', 'Data e Hora de entrada', 'Data e Hora de saída', 'Saída', '', '');
-						
-							if ($linha->data_hora_saida == NULL && $linha->saida == NULL) {
-								$linha->data_hora_saida = "-";
-								$linha->saida = "-";
-								$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->remedio, $linha->quarto, $linha->data_hora_entrada, $linha->data_hora_saida, $linha->saida, 
-									anchor("CRUD_Tratamento/update_tratamentos/$linha->id", "<img height='25px' width='25px' src='../imagens/lapis.png'>"), 
-									anchor("CRUD_Tratamento/delete_tratamentos/$linha->id", "<img height='25px' width='25px' src='../imagens/lixeira.png'>"));
-							} else {
-								if ($linha->saida == 'alta') {
-									$linha->saida = 'Alta médica';
-								} else {
-									$linha->saida = 'Óbito';
-								}
+						if ($tratamentos == NULL) {
+							echo "<br/>
+								  <div class='alert alert-info' role='alert'>
+									<strong>Desculpe!</strong> Ainda não há registros.
+								  </div>";
+						} else {
+							foreach ($tratamentos as $linha):
+								$template = array(
+								    'table_open' => '<table class="table table-striped text-center">'
+								);
+								$this->table->set_template($template);
 
 								$this->table->set_heading('CPF do paciente','CPF do médico', 'CID', 'Remédio', 'Quarto', 'Data e Hora de entrada', 'Data e Hora de saída', 'Saída', '', '');
-								$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->remedio, $linha->quarto, $linha->data_hora_entrada, $linha->data_hora_saida, $linha->saida, '', '');
-							}
+							
+								if ($linha->data_hora_saida == NULL && $linha->saida == NULL) {
+									$linha->data_hora_saida = "-";
+									$linha->saida = "-";
+									$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->remedio, $linha->quarto, $linha->data_hora_entrada, $linha->data_hora_saida, $linha->saida, 
+										anchor("CRUD_Tratamento/update_tratamentos/$linha->id", "<img height='25px' width='25px' src='../imagens/lapis.png'>"), 
+										anchor("CRUD_Tratamento/delete_tratamentos/$linha->id", "<img height='25px' width='25px' src='../imagens/lixeira.png'>"));
+								} else {
+									if ($linha->saida == 'alta') {
+										$linha->saida = 'Alta médica';
+									} else {
+										$linha->saida = 'Óbito';
+									}
 
-						endforeach;
+									$this->table->set_heading('CPF do paciente','CPF do médico', 'CID', 'Remédio', 'Quarto', 'Data e Hora de entrada', 'Data e Hora de saída', 'Saída', '', '');
+									$this->table->add_row($linha->cpf_paciente, $linha->cpf_medico, $linha->cid, $linha->remedio, $linha->quarto, $linha->data_hora_entrada, $linha->data_hora_saida, $linha->saida, '', '');
+								}
 
-						echo $this->table->generate();
+							endforeach;
+							echo $this->table->generate();
+						}
 					echo "</div>";
 				echo "</div>";
 			echo "</div>";

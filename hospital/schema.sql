@@ -22,9 +22,10 @@ CREATE TABLE medicos (
 
 
 CREATE TABLE quartos (
-	id		SERIAL 		PRIMARY KEY,
-	limite	INTEGER,
-	vago	BOOLEAN		DEFAULT TRUE
+	id				SERIAL 		PRIMARY KEY,
+	limite			INTEGER,
+	vago			BOOLEAN		DEFAULT TRUE,
+	n_pacientes		INTEGER		DEFAULT 0
 );
 
 
@@ -53,7 +54,7 @@ CREATE TABLE tratamentos (
 	cpf_paciente		CHAR(11)		REFERENCES pacientes(cpf),
 	cpf_medico			CHAR(11)		REFERENCES medicos(cpf),
 	cid 				CHAR(4)			REFERENCES doencas(codigo),
-	remedio				INTEGER			REFERENCES medicamentos(id)
+	remedio				INTEGER			REFERENCES medicamentos(id),
 	quarto 				INTEGER			REFERENCES quartos(id),
 	data_hora_entrada 	TIMESTAMP,
 	data_hora_saida		TIMESTAMP,

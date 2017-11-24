@@ -20,7 +20,7 @@
 						        echo "<div class='form-row'>";
 									echo "<div class='form-group col-md-6'>";
 										echo form_label('CPF: ');
-										echo form_input(array('name'=>'cpf', set_value('cpf'), 'class' => 'form-control'));
+										echo form_input(array('name'=>'cpf'), set_value('cpf'), array('class' => 'form-control'));
 									echo "</div>";
 									echo "<div class='form-group col-md-6'>";
 										echo form_label('RG: ');

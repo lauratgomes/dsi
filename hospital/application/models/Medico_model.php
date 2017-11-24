@@ -4,7 +4,7 @@ class Medico_model extends CI_Model{
 
 	// CRUD MEDICOS
 	// INSERT
-	public function insert_medicos($dados = NULL){
+	public function insert_medicos($dados = NULL) {
 		if ($dados != NULL):
 			$this->db->insert('medicos', $dados);
 			$this->session->set_flashdata('cadastrook', 'Cadastro realizado com sucesso!');

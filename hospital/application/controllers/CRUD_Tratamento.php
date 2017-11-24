@@ -30,6 +30,7 @@ class CRUD_Tratamento extends CI_Controller {
 		if ($this->form_validation->run() == TRUE):
 			$dados = elements(array('cpf_paciente', 'cpf_medico', 'cid', 'remedio', 'quarto', 'data_hora_entrada'), $this->input->post());
 
+			$this->Quarto_model->update_quartos_vagos($this->input->post('quarto'));
 			$this->Tratamento_model->insert_tratamentos($dados);
 		endif;
 
@@ -38,7 +39,7 @@ class CRUD_Tratamento extends CI_Controller {
 			'tela' => 'create_tratamentos',
 			'pacientes' => $this->Paciente_model->selectAll_pacientes()->result(),
 			'medicos' => $this->Medico_model->selectAll_medicos()->result(),
-			'quartos' => $this->Quarto_model->selectAll_quartos()->result(),
+			'quartos' => $this->Quarto_model->selectAll_quartos_vagos()->result(),
 		);
 		$this->load->view('crud', $dados);
 	}
@@ -58,9 +59,17 @@ class CRUD_Tratamento extends CI_Controller {
 		$this->form_validation->set_rules('cpf_medico','CPF_MEDICO', 'required');
 		$this->form_validation->set_rules('cid','CID','required');
 		$this->form_validation->set_rules('remedio', 'REMEDIO', 'required');
+		$this->form_validation->set_rules('quarto', 'QUARTO', 'required');
 
 		if ($this->form_validation->run() == TRUE):
-			$dados =  elements(array('cpf_medico', 'cid', 'remedio'), $this->input->post());
+			$dados =  elements(array('cpf_medico', 'cid', 'remedio', 'quarto'), $this->input->post());
+
+			$tratamento = $this->Tratamento_model->select_tratamentos($id_tratamento);
+
+			$quarto_antigo = $tratamento[0]->quarto;
+			$this->Quarto_model->update_libera_quarto($quarto_antigo);
+			$this->Quarto_model->update_quartos_vagos($this->input->post('quarto'));
+
 			$this->Tratamento_model->update_tratamentos($dados, $this->input->post('id_tratamento'));
 		endif;
 
@@ -79,12 +88,18 @@ class CRUD_Tratamento extends CI_Controller {
 		$dados_saida = elements(array('data_hora_saida', 'saida'), $this->input->post());
 
 		if ($id_tratamento > 0):
+			$dados_tratamento = $this->Tratamento_model->select_tratamentos($id_tratamento)->result();
+
+			$id_quarto = $dados_tratamento[0]->quarto;
+			$this->Quarto_model->update_libera_quarto($id_quarto);
+
 			if ($this->Tratamento_model->registra_saidas($dados_saida, $id_tratamento)) {
 				if ($this->input->post('saida') == 'morte') {
-					$dados_tratamento = $this->Tratamento_model->select_tratamentos($id_tratamento)->result();
-					$cpf_paciente = $this->Paciente_model->gera_certidao_obito($dados_tratamento);
-					//$this->Tratamento_model->delete_tratamentos($cpf_paciente);
-					//$this->Paciente_model->delete_pacientes(array('cpf' => $cpf_paciente));
+					if ($this->Tratamento_model->delete_tratamentos($dados_tratamento[0]->cpf_paciente)) {
+						$this->Paciente_model->delete_pacientes($dados_tratamento[0]->cpf_paciente);
+					}
+				} else {
+					$this->Tratamento_model->selectAll_tratamentos();
 				}
 			}
 		endif;

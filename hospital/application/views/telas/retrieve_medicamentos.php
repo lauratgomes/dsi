@@ -23,7 +23,7 @@
                         echo "<div class='card-body'>";
 
 							if ($this->session->flashdata('exclusaook')):
-								echo '<p>'.$this->session->flashdata('exclusaook').'</p>';
+								echo "<p class='success'>".$this->session->flashdata('exclusaook')."</p>";
 							endif;
 
 							if ($medicamentos == NULL) {

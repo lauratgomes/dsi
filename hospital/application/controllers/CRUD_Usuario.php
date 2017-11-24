@@ -126,6 +126,8 @@ class CRUD_Usuario extends CI_Controller {
 				$this->session->set_userdata('logado', false);
 				$this->load->view('login');
 			}
+		} else {
+			$this->load->view('telas/login');
 		}
 	}
 

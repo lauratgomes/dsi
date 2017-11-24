@@ -20,19 +20,17 @@
 								echo "<div class='form-row'>";
 									echo "<div class='form-group col-md-6'>";
 										echo form_label('CPF: ');
-										echo form_input(array('name'=>'cpf', 'pattern'=>'\d*', 'max'=>'99999999999'), set_value('cpf'), array('class' => 'form-control'));
+										echo form_input(array('name'=>'cpf'), set_value('cpf'), array('class' => 'form-control'));
 									echo "</div>";
 									echo "<div class='form-group col-md-6'>";
 										echo form_label('CRM/COREN: ');
 										echo form_input(array('name'=>'crm_coren'), set_value('crm_coren'), array('class' => 'form-control'));
 									echo "</div>";
 								echo "</div>";
-	
 								echo "<div class='form-group'>";
 									echo form_label('Nome: ');
 									echo form_input(array('name'=>'nome'), set_value('nome'), array('class' => 'form-control'));
 								echo "</div>";
-								
 								echo "<div class='form-row'>";
 									echo "<div class='form-group col-md-6'>";
 										echo form_label('Data de nascimento: ');
@@ -43,7 +41,6 @@
 										echo form_input(array('name'=>'cep'), set_value('cep'), array('class' => 'form-control'));
 									echo "</div>";
 								echo "</div>";
-
 								echo "<div class='form-group'>";
 									echo form_label('Rua: ');
 									echo form_input(array('name'=>'rua'), set_value('rua'), array('class' => 'form-control'));

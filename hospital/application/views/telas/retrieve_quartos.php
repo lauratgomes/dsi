@@ -31,9 +31,10 @@
 										echo "<h5 class='card-title text-center'> Quarto " . $linha->id . " - " . $linha->vago . "</h5>";
 										echo "<div class='card-body'>";
 											echo "<p class='card-text text-justify'> Limite de pacientes: " . $linha->limite . "</p>";
+											echo "<p class='card-text text-justify'> Quantidade de pacientes: " . $linha->n_pacientes . "</p>";
 											echo "<div class='text-right'>";
 												echo anchor("CRUD_Quarto/update_quartos/$linha->id", "<img height='25px' width='25px' src='../imagens/lapis.png'>");
-												if ($linha->vago == 'Vago') {
+												if ($linha->vago == 'Vago' && $linha->n_pacientes == 0) {
 													echo anchor("CRUD_Quarto/delete_quartos/$linha->id", "<img height='25px' width='25px' src='../imagens/lixeira.png'>");
 												}
 											echo "</div>";

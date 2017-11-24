@@ -43,7 +43,7 @@
                                           </select>";
                                 echo "</div> <br />";
 								echo "<div class='text-center'>";
-                                    echo form_submit(array('name'=>'cadastrar'), 'Excluir', array('class' => 'btn btn-secondary btn-block'));
+                                    echo form_submit(array('name'=>'cadastrar'), 'Editar', array('class' => 'btn btn-secondary btn-block'));
                                 echo "</div>";
 								echo form_hidden('id_user', $query->id);
 							echo form_close();

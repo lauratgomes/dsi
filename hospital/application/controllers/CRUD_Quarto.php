@@ -45,7 +45,7 @@ class CRUD_Quarto extends CI_Controller {
 		$this->form_validation->set_rules('limite','LIMITE', 'required');
 
 		if ($this->form_validation->run() == TRUE):
-			$dados = elements(array('limite'), $this->input->post());
+			$dados = $this->input->post('limite');
 			$this->Quarto_model->update_quartos($dados, $this->input->post('id_quarto'));
 		endif;
 

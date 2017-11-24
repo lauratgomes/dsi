@@ -18,7 +18,7 @@ class CRUD_Medico extends CI_Controller {
 	
 	// CRUD MÉDICOS (C - ; R - ; U - ; D - ;)
 	public function create_medicos() {
-		$this->form_validation->set_rules('cpf','CPF','trim|required|max_length[14]|is_unique[medicos.cpf]');
+		$this->form_validation->set_rules('cpf','CPF','trim|required|max_length[11]|is_unique[medicos.cpf]');
 		$this->form_validation->set_rules('crm_coren','CRM_COREN','trim|required|max_length[10]');
 		$this->form_validation->set_rules('nome','NOME','trim|required|max_length[50]');
 		$this->form_validation->set_rules('nascimento','NASCIMENTO', 'required');
